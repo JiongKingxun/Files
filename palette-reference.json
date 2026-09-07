@@ -1,0 +1,13 @@
+{
+  "reference": "恢复 PSD 改色前的炭黑与浅绿配色",
+  "colors": {
+    "background": "#101111",
+    "hero": "#0b0e0c",
+    "foreground": "#edf2ea",
+    "accent": "#d0ed90",
+    "accent_hover": "#e4ffad",
+    "muted": "#a1a99d",
+    "line": "#2d332b"
+  },
+  "site_background": "#101111"
+}

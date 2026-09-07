@@ -1,0 +1,30 @@
+{
+  "mode": "house",
+  "recipe": null,
+  "scope": "icon",
+  "target": "react",
+  "title": "Home Icon Motion",
+  "elementName": "home-icon-motion",
+  "durationMs": 5000,
+  "fps": 60,
+  "size": 1080,
+  "hostWidth": 24,
+  "hostHeight": 24,
+  "inlineStart": 0.2,
+  "label": "Home",
+  "resultLabel": null,
+  "secondaryLabel": "History",
+  "tertiaryLabel": "Check",
+  "meaning": "home",
+  "referenceVideo": null,
+  "sourceIcon": null,
+  "colors": {
+    "accent": "#D0ED90",
+    "light": "#F3FF0B",
+    "background": "#F0EEE8",
+    "bar": "#090909",
+    "foreground": "#E4E1D9",
+    "muted": "#706D66",
+    "shadow": "rgba(38,34,27,.42)"
+  }
+}
