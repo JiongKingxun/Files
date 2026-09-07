@@ -1,0 +1,27 @@
+{
+  "name": "generated-icon-motion",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "./web-component/icon-motion.js"
+  ],
+  "exports": {
+    ".": {
+      "types": "./web-component/icon-motion.d.ts",
+      "default": "./web-component/icon-motion.js"
+    },
+    "./react": {
+      "types": "./react/IconMotion.d.ts",
+      "default": "./react/IconMotion.js"
+    }
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  }
+}

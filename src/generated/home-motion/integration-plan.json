@@ -1,0 +1,68 @@
+{
+  "project": "C:\\Users\\q9715\\Documents\\Codex\\2026-09-05\\x20-ai-aigc-ai-x20-1-3\\outputs\\axuan-portfolio",
+  "framework": "react",
+  "adapter": "react",
+  "packageManager": "pnpm",
+  "sourceRoots": [
+    "src"
+  ],
+  "reactServerComponents": false,
+  "verificationCommands": [
+    "pnpm build"
+  ],
+  "homeCandidates": [
+    {
+      "file": "src\\main.jsx",
+      "line": 40,
+      "score": 9,
+      "preview": "<nav className={menu?'nav open':'nav'} aria-label=\"主导航\">{[['home','首页'],['about','关于我'],['work','精选作品'],['expertise','个人优势']].map(([id,label],i)=><a key={id} href={`#${id}`} onClick={()=>setMenu(false)}><span className=\""
+    },
+    {
+      "file": "src\\main.jsx",
+      "line": 39,
+      "score": 1,
+      "preview": "<a className=\"logo\" href=\"#home\" aria-label=\"Axuan 首页\">AXUAN<span className=\"logo-dot\">.</span><span className=\"logo-cn\">钟启轩</span></a>"
+    },
+    {
+      "file": "src\\main.jsx",
+      "line": 45,
+      "score": 1,
+      "preview": "<section className=\"hero\" id=\"home\">"
+    },
+    {
+      "file": "src\\main.jsx",
+      "line": 77,
+      "score": 1,
+      "preview": "<section className=\"contact\" id=\"contact\"><div className=\"wrap contact-inner\"><div className=\"section-label\"><span>04 / LET’S CONNECT</span><span><span className=\"status-dot\"/> 开放工作与项目合作</span></div><div className=\"conta"
+    }
+  ],
+  "recommendedGeneratedDir": "src\\generated\\home-motion",
+  "mode": "house",
+  "meaning": "home",
+  "label": "首页",
+  "elementName": "home-icon-motion",
+  "resultLabel": null,
+  "accent": "#D0ED90",
+  "light": "#F3FF0B",
+  "presentation": "inline",
+  "generatedDir": "src\\generated\\home-motion",
+  "generatedOutput": {
+    "output": "C:\\Users\\q9715\\Documents\\Codex\\2026-09-05\\x20-ai-aigc-ai-x20-1-3\\outputs\\axuan-portfolio\\src\\generated\\home-motion",
+    "html": "C:\\Users\\q9715\\Documents\\Codex\\2026-09-05\\x20-ai-aigc-ai-x20-1-3\\outputs\\axuan-portfolio\\src\\generated\\home-motion\\index.html",
+    "developer": "C:\\Users\\q9715\\Documents\\Codex\\2026-09-05\\x20-ai-aigc-ai-x20-1-3\\outputs\\axuan-portfolio\\src\\generated\\home-motion\\developer",
+    "plan": null,
+    "exports": []
+  },
+  "imports": {
+    "webComponent": "src\\generated\\home-motion\\developer\\web-component\\icon-motion.js",
+    "react": "src\\generated\\home-motion\\developer\\react\\IconMotion.js"
+  },
+  "integrationPattern": "inline-nav-icon",
+  "nextSteps": [
+    "Patch the existing Home interaction; do not replace the application.",
+    "Preserve the original Home route or state update.",
+    "Use the generated framework wrapper when present, otherwise the Web Component.",
+    "Keep presentation=inline unless an enlarged cinematic treatment is explicitly requested.",
+    "Run the project's existing verification commands after integration."
+  ]
+}

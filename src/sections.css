@@ -1,0 +1,54 @@
+.nav{gap:clamp(16px,1.7vw,30px)}
+.nav a{font-size:13px}
+.about-expertise{margin-top:72px;padding-top:40px;border-top:1px solid var(--line);scroll-margin-top:100px}
+.about-expertise .section-label{border-bottom:0;padding-bottom:0}
+.about-expertise .section-heading{margin-top:26px;margin-bottom:36px}
+.about-expertise .section-heading h2{font-size:clamp(32px,3vw,48px)}
+.about-expertise .skill-top{margin-bottom:32px}
+.about-expertise .skill{display:flex;flex-direction:column}
+.about-expertise .skill-body{flex:1}
+.about-expertise .tool-line{padding-bottom:40px;border-bottom:1px solid var(--line)}
+.creativity-projects{grid-template-columns:1fr}
+.creativity-projects .project{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);grid-template-rows:1fr 1fr;gap:0 clamp(28px,4vw,64px);align-items:start}
+.creativity-projects .project-image{grid-row:1/3;width:100%;align-self:center}
+.creativity-projects .project-meta{display:block;align-self:end;padding-top:0;padding-bottom:18px}
+.creativity-projects .project-meta h3{font-size:clamp(24px,2.2vw,36px);line-height:1.5}
+.creativity-projects .project-meta>span{display:flex;margin-top:24px;color:var(--accent)}
+.creativity-projects .project-summary{margin:0;max-width:390px;font-size:14px;line-height:2}
+.creativity-projects .project-number{letter-spacing:.08em}
+.contact-cta{max-width:100%;gap:clamp(24px,5vw,85px)}
+.contact-cta:hover{gap:clamp(24px,5vw,85px)}
+@media(max-width:1100px){
+  .nav-wrap{gap:18px}
+  .nav{gap:16px}
+  .nav-index{display:none}
+  .logo-cn{display:none}
+  .nav-contact{padding:11px 13px;gap:12px}
+}
+@media(min-width:641px) and (max-width:1000px){
+  .menu-button{display:grid;place-items:center}
+  .nav-contact{margin-left:auto}
+  .nav{display:none;position:absolute;top:84px;left:0;right:0;background:#0b0e0c;padding:24px 40px;border-bottom:1px solid var(--line)}
+  .nav.open{display:flex;flex-direction:column;gap:18px}
+  .nav a{font-size:16px;padding:5px 0}
+  .header.is-scrolled .nav{top:72px}
+}
+@media(min-width:641px) and (max-width:900px){.nav{top:78px}}
+@media(max-width:900px){
+  .creativity-projects .project{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:0 26px}
+  .creativity-projects .project-meta h3{font-size:24px}
+  .creativity-projects .project-summary{font-size:13px}
+}
+@media(max-width:640px){
+  .nav a{font-size:16px}
+  .about-expertise{margin-top:44px;padding-top:28px;scroll-margin-top:84px}
+  .about-expertise .section-heading{margin-bottom:26px}
+  .about-expertise .section-heading h2{font-size:32px}
+  .about-expertise .tool-line{padding-bottom:28px}
+  .creativity .section-label{align-items:flex-start;gap:12px}
+  .creativity .section-label>span:last-child{max-width:110px;line-height:1.6;text-align:right}
+  .creativity-projects .project{display:block}
+  .creativity-projects .project-meta{padding-top:22px;padding-bottom:16px}
+  .creativity-projects .project-meta>span{margin-top:15px}
+  .creativity-projects .project-meta h3{font-size:24px}
+}

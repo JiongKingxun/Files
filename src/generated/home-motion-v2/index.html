@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home Icon Motion</title>
+  <style>
+    :root {
+      --stage-size: 1080px;
+      --duration: 5000ms;
+      --motion-delay: 0ms;
+      --motion-state: running;
+      --motion-iterations: infinite;
+      --background: #F0EEE8;
+      --bar: #090909;
+      --foreground: #E4E1D9;
+      --muted: #706D66;
+      --accent: #D0ED90;
+      --light: #F3FF0B;
+      --shadow: rgba(38,34,27,.42);
+      --ease: cubic-bezier(.18,.72,.22,1);
+      --ease-soft: cubic-bezier(.25,.1,.25,1);
+      --ease-off: cubic-bezier(.4,0,.65,.35);
+      --ease-fold: cubic-bezier(.4,0,.2,1);
+      --ease-crossfade: cubic-bezier(.33,0,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      background: #181818;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      overflow: auto;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .stage {
+      position: relative;
+      width: var(--stage-size);
+      height: var(--stage-size);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 48% 44%, rgba(255,255,255,.72), transparent 45%),
+        var(--background);
+      isolation: isolate;
+    }
+
+    .ambient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.20), transparent 42%);
+      pointer-events: none;
+    }
+
+    .anim {
+      animation-duration: var(--duration);
+      animation-iteration-count: var(--motion-iterations);
+      animation-fill-mode: both;
+      animation-delay: var(--motion-delay);
+      animation-play-state: var(--motion-state);
+    }
+
+    .nav-camera {
+      position: absolute;
+      left: 30%;
+      top: 33%;
+      width: 100%;
+      height: 34%;
+      animation-name: camera;
+      transform-origin: 21.5% 50%;
+      will-change: transform;
+    }
+
+    .nav {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3, calc(var(--stage-size) * .237));
+      justify-content: start;
+      align-items: center;
+      padding: 2.4% 2.5% 2.4% calc(var(--stage-size) * .096);
+      border-radius: calc(var(--stage-size) * .102);
+      background: var(--bar);
+      box-shadow:
+        0 calc(var(--stage-size) * .038) calc(var(--stage-size) * .065) var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,.04);
+    }
+
+    .nav-item {
+      min-width: 0;
+      height: 82%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: calc(var(--stage-size) * .008);
+      color: var(--muted);
+    }
+
+    .nav-item.inactive {
+      animation-name: defocus;
+      will-change: filter, opacity;
+    }
+
+    .nav-item.inactive .icon-shell {
+      width: calc(var(--stage-size) * .112);
+      height: calc(var(--stage-size) * .112);
+    }
+
+    .icon-shell {
+      position: relative;
+      width: calc(var(--stage-size) * .128);
+      height: calc(var(--stage-size) * .128);
+      display: grid;
+      place-items: center;
+    }
+
+    .icon-shell > svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .mode-house .nav-item.active .icon-shell > svg {
+      width: 210%;
+      height: 210%;
+    }
+
+
+    .label {
+      color: currentColor;
+      font-size: calc(var(--stage-size) * .0365);
+      font-weight: 440;
+      line-height: 1;
+      letter-spacing: -.02em;
+      white-space: nowrap;
+    }
+
+    .nav-item.active .label {
+      animation-name: active-label;
+      color: #858179;
+    }
+
+    .icon-shell > svg.history-icon {
+      width: 100%;
+      height: 100%;
+      color: var(--muted);
+    }
+
+    .icon-shell > svg.check-icon {
+      width: 70%;
+      height: 70%;
+      color: var(--accent);
+    }
+
+    @keyframes camera {
+      0%, 9% { transform: translate3d(0,0,0) scale(1); }
+      9% { animation-timing-function: var(--ease); }
+      24%, 76% { transform: translate3d(0,0,0) scale(1.8); }
+      76% { animation-timing-function: var(--ease); }
+      90%, 100% { transform: translate3d(0,0,0) scale(1); }
+    }
+
+    @keyframes defocus {
+      0%, 10%, 89%, 100% { filter: blur(0); opacity: 1; }
+      10% { animation-timing-function: var(--ease-soft); }
+      24%, 76% { filter: blur(calc(var(--stage-size) * .0038)); opacity: .58; }
+      76% { animation-timing-function: var(--ease-soft); }
+    }
+
+    @keyframes active-label {
+      0%, 20%, 82%, 100% { color: #77736c; }
+      20% { animation-timing-function: var(--ease-soft); }
+      38%, 62% { color: #a09c93; }
+      62% { animation-timing-function: var(--ease-soft); }
+    }
+
+    /* House template */
+    .flat-house {
+      fill: #706c64;
+      transform-box: fill-box;
+      transform-origin: center;
+      animation-name: flat-house;
+    }
+
+    .house-assembly,
+    .house-lighting {
+      transform: translate(-15px,0);
+      transform-box: fill-box;
+    }
+
+    .house-front {
+      fill: #c9c6bf;
+      animation-name: house-front;
+      transform-box: fill-box;
+      transform-origin: center bottom;
+    }
+
+    .house-side {
+      fill: #211f1d;
+      animation-name: house-side;
+      transform-box: fill-box;
+      transform-origin: right center;
+      will-change: transform;
+    }
+
+    .house-roof {
+      fill: #efede8;
+      animation-name: house-roof;
+      transform-box: fill-box;
+      will-change: clip-path;
+    }
+
+    .roof-line {
+      fill: none;
+      stroke: #faf9f5;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 54;
+      animation-name: roof-line;
+      will-change: stroke-dashoffset, opacity;
+    }
+
+    .door {
+      fill: var(--bar);
+      animation-name: doorway;
+      transform-box: fill-box;
+      transform-origin: center bottom;
+      will-change: transform;
+    }
+
+    .porthole {
+      fill: var(--bar);
+      animation-name: porthole;
+      transform-box: fill-box;
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    .porthole-light {
+      fill: var(--light);
+      animation-name: porthole-light;
+      transform-box: fill-box;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+
+    .side-window {
+      fill: #0e0e0d;
+      animation-name: side-window;
+      transform-box: fill-box;
+      transform-origin: right center;
+      will-change: transform;
+    }
+
+    .light-beam {
+      fill: url(#beamGradient);
+      animation-name: light-beam;
+      transform-box: fill-box;
+      transform-origin: right center;
+      mix-blend-mode: normal;
+      will-change: transform, opacity;
+    }
+
+    .light-underfold {
+      fill: url(#beamGradient);
+      animation-name: light-underfold;
+      transform-box: fill-box;
+      transform-origin: right center;
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    }
+
+    .beam-hot {
+      stop-color: color-mix(in srgb, var(--light), #8a290b 55%);
+    }
+
+    .beam-mid {
+      stop-color: color-mix(in srgb, var(--light), #541700 70%);
+    }
+
+    .beam-tail {
+      stop-color: color-mix(in srgb, var(--light), #271100 82%);
+    }
+
+
+    .light-cube {
+      animation-name: light-cube;
+      transform-box: fill-box;
+      transform-origin: right center;
+      will-change: transform;
+    }
+
+    .light-cube-side {
+      fill: var(--light);
+    }
+
+    @keyframes flat-house {
+      0%, 20% {
+        opacity: 1;
+        fill: #706c64;
+        transform: translate(0,0) scale(1);
+      }
+      20% { animation-timing-function: var(--ease); }
+      25.5% {
+        opacity: 1;
+        fill: #aaa79f;
+        transform: translate(11px,2px) scale(1.05);
+      }
+      26.5% {
+        opacity: 1;
+        fill: #c9c6bf;
+        transform: translate(11px,2px) scale(1.05);
+        animation-timing-function: var(--ease-crossfade);
+      }
+      29.5%, 72.5% {
+        opacity: 0;
+        fill: #c9c6bf;
+        transform: translate(11px,2px) scale(1.05);
+      }
+      72.5% {
+        animation-timing-function: var(--ease-crossfade);
+      }
+      75.5% {
+        opacity: 1;
+        fill: #c9c6bf;
+        transform: translate(11px,2px) scale(1.05);
+        animation-timing-function: var(--ease);
+      }
+      83.5%, 100% {
+        opacity: 1;
+        fill: #706c64;
+        transform: translate(0,0) scale(1);
+      }
+    }
+
+    @keyframes house-front {
+      0%, 26.5% { opacity: 0; }
+      26.5% { animation-timing-function: var(--ease-crossfade); }
+      29.5%, 72.5% { opacity: 1; }
+      72.5% { animation-timing-function: var(--ease-crossfade); }
+      75.5%, 100% { opacity: 0; }
+    }
+
+    @keyframes house-side {
+      0%, 24.5% { opacity: 1; transform: scaleX(0); }
+      24.5% { animation-timing-function: var(--ease); }
+      31.5%, 68.5% { opacity: 1; transform: scaleX(1); }
+      68.5% { animation-timing-function: var(--ease-fold); }
+      75.5%, 100% { opacity: 1; transform: scaleX(0); }
+    }
+
+    @keyframes house-roof {
+      0%, 23.5% {
+        opacity: 1;
+        clip-path: polygon(50% 100%,100% 46%,100% 46%,50% 100%);
+      }
+      23.5% {
+        animation-timing-function: var(--ease);
+      }
+      30.5%, 69% {
+        opacity: 1;
+        clip-path: polygon(0 54%,49% 0,100% 46%,50% 100%);
+      }
+      69% { animation-timing-function: var(--ease-fold); }
+      76%, 100% {
+        opacity: 1;
+        clip-path: polygon(50% 100%,100% 46%,100% 46%,50% 100%);
+      }
+    }
+
+    @keyframes roof-line {
+      0%, 21.5% { opacity: 0; stroke-dashoffset: 54; }
+      21.5% { animation-timing-function: var(--ease); }
+      24.5%, 26% { opacity: 1; stroke-dashoffset: 0; }
+      28.5%, 71.5% { opacity: 0; stroke-dashoffset: 0; }
+      71.5% { animation-timing-function: var(--ease); }
+      73.5%, 74.5% { opacity: 1; stroke-dashoffset: 0; }
+      77.5%, 100% { opacity: 0; stroke-dashoffset: 54; }
+    }
+
+    @keyframes doorway {
+      0%, 25.5% { transform: scaleY(0); opacity: 1; }
+      25.5% { animation-timing-function: var(--ease); }
+      32%, 67.5% { transform: scaleY(1); opacity: 1; }
+      67.5% { animation-timing-function: var(--ease-fold); }
+      74.5%, 100% { transform: scaleY(0); opacity: 1; }
+    }
+
+    @keyframes porthole {
+      0%, 25% { transform: scale(0); opacity: 1; }
+      25% { animation-timing-function: var(--ease); }
+      31.5%, 66.5% { transform: scale(1); opacity: 1; }
+      66.5% { animation-timing-function: var(--ease-fold); }
+      73.5%, 100% { transform: scale(0); opacity: 1; }
+    }
+
+    @keyframes porthole-light {
+      0%, 31% { transform: translateX(-5px) scale(.1); opacity: 0; }
+      31% { animation-timing-function: var(--ease-soft); }
+      36.5%, 61.5% { transform: translateX(0) scale(1); opacity: 1; }
+      61.5% { animation-timing-function: var(--ease-off); }
+      66.5%, 100% { transform: translateX(-5px) scale(.1); opacity: 0; }
+    }
+
+    @keyframes side-window {
+      0%, 29.5% { opacity: 1; transform: scaleX(0); }
+      29.5% { animation-timing-function: var(--ease-soft); }
+      34%, 63.5% { opacity: 1; transform: scaleX(1); }
+      63.5% { animation-timing-function: var(--ease-off); }
+      69%, 100% { opacity: 1; transform: scaleX(0); }
+    }
+
+    @keyframes light-beam {
+      0%, 34% { opacity: 0; transform: scaleX(0); }
+      34% { animation-timing-function: var(--ease-soft); }
+      40%, 60.5% { opacity: .82; transform: scaleX(1); }
+      60.5% { animation-timing-function: var(--ease-off); }
+      65%, 100% { opacity: 0; transform: scaleX(0); }
+    }
+
+    @keyframes light-underfold {
+      0%, 34.5% { opacity: 0; transform: scaleX(0); }
+      34.5% { animation-timing-function: var(--ease-soft); }
+      40.5%, 59.5% { opacity: .28; transform: scaleX(1); }
+      59.5% { animation-timing-function: var(--ease-off); }
+      64.5%, 100% { opacity: 0; transform: scaleX(0); }
+    }
+
+    @keyframes light-cube {
+      0%, 33.5% { opacity: 1; transform: scaleX(0); }
+      33.5% { animation-timing-function: var(--ease-soft); }
+      38%, 60.5% { opacity: 1; transform: scaleX(1); }
+      60.5% { animation-timing-function: var(--ease-off); }
+      66%, 100% { opacity: 1; transform: scaleX(0); }
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation-play-state: paused; animation-delay: 0ms; }
+    }
+  </style>
+  <script>
+    if (new URLSearchParams(location.search).has("render")) {
+      document.documentElement.style.setProperty("--motion-state", "paused");
+    }
+  </script>
+</head>
+<body>
+  <main class="stage mode-house" aria-label="Home Icon Motion">
+    <div class="ambient"></div>
+    <div class="nav-camera anim">
+      <section class="nav">
+        <div class="nav-item active">
+          <div class="icon-shell"><svg class="house-motion" viewBox="-35 -10 250 175" aria-hidden="true">
+  <defs>
+    <linearGradient id="beamGradient" x1="1" y1=".5" x2="0" y2=".5">
+      <stop class="beam-hot" offset="0" stop-opacity=".98"/>
+      <stop class="beam-mid" offset=".42" stop-opacity=".62"/>
+      <stop class="beam-tail" offset="1" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="beamBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation=".35"/>
+    </filter>
+  </defs>
+  <path class="flat-house anim" d="M50 74 90 39 130 74v58H50Z"/>
+  <g class="house-assembly anim">
+    <path class="house-side anim" d="M32 44 74 72v64l-42-25Z"/>
+    <path class="house-front anim" d="M74 72 116 39 158 72v64H74Z"/>
+    <path class="house-roof anim" d="M32 44 73 11l43 28-42 33Z"/>
+    <path class="roof-line anim" d="M74 72 116 39"/>
+    <rect class="door anim" x="94" y="98" width="46" height="39"/>
+    <path class="side-window anim" d="m46 71 14 9v23l-14-9Z"/>
+    <circle class="porthole anim" cx="120" cy="74" r="10.5"/>
+    <g class="porthole-light-tilt" transform="rotate(22 116.4 72.6)">
+      <ellipse
+        class="porthole-light anim"
+        cx="116.4"
+        cy="72.6"
+        rx="6.8"
+        ry="8.6"
+      />
+    </g>
+  </g>
+  <g class="house-lighting anim">
+    <path class="light-beam anim" filter="url(#beamBlur)" d="M46 71-15 83-15 149 46 112 60 103 46 94Z"/>
+    <path class="light-underfold anim" d="M46 94 60 103 46 112-15 149Z"/>
+    <g class="light-cube anim">
+      <path class="light-cube-side" d="m46 71 14 9v23l-14-9Z"/>
+    </g>
+  </g>
+</svg></div>
+          <div class="label" data-motion-label="active">Home</div>
+        </div>
+        <div class="nav-item inactive anim">
+          <div class="icon-shell">
+            <svg class="history-icon" viewBox="0 0 100 100" aria-hidden="true">
+              <path fill="currentColor" d="M24 28h52l-5 52c-.5 5-4 8-9 8H38c-5 0-8.5-3-9-8Z"/>
+              <ellipse cx="50" cy="28" rx="26" ry="10" fill="currentColor"/>
+              <ellipse cx="50" cy="29" rx="18" ry="4.5" fill="var(--bar)"/>
+            </svg>
+          </div>
+          <div class="label" data-motion-label="secondary">History</div>
+        </div>
+        <div class="nav-item inactive anim">
+          <div class="icon-shell">
+            <svg class="check-icon" viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="39" fill="currentColor"/>
+              <path d="M50 29v42M29 50h42" fill="none" stroke="#0c0c0b" stroke-width="9" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="label" data-motion-label="tertiary">Check</div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+    window.MOTION_CONFIG = {"mode": "house", "recipe": null, "scope": "icon", "target": "react", "title": "Home Icon Motion", "elementName": "home-icon-motion", "durationMs": 5000, "fps": 60, "size": 1080, "hostWidth": 24, "hostHeight": 24, "inlineStart": 0.2, "label": "Home", "resultLabel": null, "secondaryLabel": "History", "tertiaryLabel": "Check", "meaning": "home", "referenceVideo": null, "sourceIcon": null, "colors": {"accent": "#D0ED90", "light": "#F3FF0B", "background": "#F0EEE8", "bar": "#090909", "foreground": "#E4E1D9", "muted": "#706D66", "shadow": "rgba(38,34,27,.42)"}};
+    window.setMotionTime = async function setMotionTime(milliseconds) {
+      const root = document.documentElement;
+      const duration = window.MOTION_CONFIG.durationMs;
+      const time = Math.max(0, Math.min(Number(milliseconds) || 0, duration - .001));
+      root.style.setProperty("--motion-state", "paused");
+      root.style.setProperty("--motion-delay", `-${time}ms`);
+      void document.body.offsetWidth;
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      return time;
+    };
+    document.addEventListener("click", () => {
+      const root = document.documentElement;
+      const paused = root.style.getPropertyValue("--motion-state") === "paused";
+      root.style.setProperty("--motion-delay", "0ms");
+      root.style.setProperty("--motion-state", paused ? "running" : "paused");
+    });
+  </script>
+</body>
+</html>
