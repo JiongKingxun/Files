@@ -10,6 +10,7 @@ import { AboutPortrait } from './AboutPortrait.jsx';
 import { videoProjects } from './video-projects.js';
 import { modelResearchProject, ModelResearchDetail } from './ModelResearch.jsx';
 import { trainingExperienceProject, TrainingExperienceDetail } from './TrainingExperience.jsx';
+import { socialExperienceProject, SocialExperienceDetail } from './SocialExperience.jsx';
 import { projectCovers } from './project-covers.js';
 import { ContactSection } from './ContactSection.jsx';
 import { CreativeTools } from './CreativeTools.jsx';
@@ -51,6 +52,7 @@ const projects = [
   ...videoProjects,
   modelResearchProject,
   trainingExperienceProject,
+  socialExperienceProject,
 ];
 
 const projectTotal = String(projects.length).padStart(2, '0');
@@ -75,9 +77,9 @@ const skillCards = [
 
 function ProjectCard({ project:p, onSelect }) {
   const isCollection = Boolean(p.episodes);
-  return <button className={`project reveal ${p.featured ? 'project-featured' : ''} ${isCollection ? 'project-series-collection' : ''} ${p.kind === 'model-research' ? 'project-model-research' : ''} ${p.kind === 'training-experience' ? 'project-training-experience' : ''}`} onClick={() => onSelect(p)} aria-label={isCollection ? '打开高欢前传连续影像 06 至 08' : `${p.video ? '播放' : '查看'}${p.name}`}>
+  return <button className={`project reveal ${p.featured ? 'project-featured' : ''} ${isCollection ? 'project-series-collection' : ''} ${p.kind === 'model-research' ? 'project-model-research' : ''} ${p.kind === 'training-experience' ? 'project-training-experience' : ''} ${p.kind === 'social-experience' ? 'project-social-experience' : ''}`} onClick={() => onSelect(p)} aria-label={isCollection ? '打开高欢前传连续影像 06 至 08' : `${p.video ? '播放' : '查看'}${p.name}`}>
     <div className="project-image">
-      <img src={asset(projectCovers[p.id] || p.image)} alt={p.kind === 'training-experience' ? '钟启轩驻校授课现场' : `${p.name} · 氛围封面`} loading="lazy" decoding="async" width="1600" height="900"/>
+      <img src={asset(projectCovers[p.id] || p.image)} alt={p.coverAlt || (p.kind === 'training-experience' ? '钟启轩驻校授课现场' : `${p.name} · 氛围封面`)} loading="lazy" decoding="async" width="1600" height="900"/>
       <span className="project-number">{p.id} / {projectTotal}</span>
       <span className="project-open">{isCollection ? <FilmStrip size={29} weight="fill"/> : p.video ? <PlayCircle size={31} weight="fill"/> : <ArrowUpRight size={27}/>}</span>
       {(p.video || isCollection) && <span className="video-duration">{isCollection ? '03 EPISODES' : p.duration}</span>}
@@ -196,7 +198,7 @@ function App(){
         <div className="section-label reveal"><span>01 / ABOUT ME</span><span>有想象力，也有执行力</span></div>
         <div className="about-grid reveal"><AboutPortrait/><div className="about-copy"><div className="eyebrow muted">DESIGNER / CREATOR / TEAM BUILDER</div><h2>感性的创作<br/><span className="dim">理性的落地</span></h2><p>我关注视觉与品牌表达，也探索 AI 如何参与真实的影视生产，从校园内容创作、工程项目管理，到 AIGC 影视实践，我习惯把想法拆解成清晰的任务，再一步步完成交付</p><p>从 Flow / Veo 2、Sora 2 到持续迭代的视频模型，我一路积累生成、分镜与后期经验，也在项目中参与双团队管理，带领零基础大学生团队进入 AIGC 制作</p><p className="early-practice">作为国内较早投入 Codex 与智能体工作流实践的创作者，我把工具用于任务拆解、资料整理与流程自动化，再将经验沉淀为教学材料与团队方法</p><div className="about-contacts"><a href="mailto:Axuanxxx@foxmail.com">Axuanxxx@foxmail.com <ArrowUpRight size={17}/></a><a href="tel:17348060633">173 4806 0633 <ArrowUpRight size={17}/></a></div></div></div>
         <section className="expertise about-expertise" id="expertise" aria-labelledby="expertise-title"><div className="section-label reveal"><span>WHAT I BRING</span><span>个人优势</span></div><div className="section-heading reveal"><h2 id="expertise-title">创意之外，<br/><span className="dim">让项目向前</span></h2><p>既能参与具体的视觉制作，<br/>也能统筹流程，与团队一起完成交付</p></div><div className="skills">{skillCards.map(({n,Icon,title,en,body,tags}) => <article className="skill reveal" key={n}><div className="skill-top"><Icon size={34} weight="light"/><span>{n}</span></div><p className="skill-en">{en}</p><h3>{title}</h3><p className="skill-body">{body}</p><div className="skill-tags">{tags}</div></article>)}</div><CreativeTools/></section>
-        <div className="experience reveal"><div className="experience-art" aria-hidden="true"><img src="/media/axuan-experience-director-v4.webp" alt="" loading="lazy" decoding="async"/></div><div className="experience-title">经历的每一步，<br/>都成为创作的一部分<span>THE PATH SO FAR</span></div><div className="timeline"><article><time>2025 — 至今</time><div><h3>AIGC 影视创作与流程实践</h3><p>经历 Flow / Veo 2、Sora 2 等模型阶段，探索九宫格分镜与 Codex 智能体工作流；参与《深宫劫之奸妃当道》双团队管理并制作 AI 花絮，并担任执行导演，项目已上线红果平台</p></div><span className="current-dot"/></article><article><time>2022 / 05 — 2025 / 07</time><div><h3>四川华西 · 安装工程师</h3><p>四川省第四建筑有限公司，参与武侯区亚中医疗项目，负责多专业协同、团队管理、甲方沟通与验收交付</p></div></article><article><time>2019 — 2022</time><div><h3>校园组织与内容创作</h3><p>四川建筑职业技术学院；社团联合会办公室副主任、易班工作站创产负责人，开展视频剪辑、组织运营与跨部门协作</p></div></article></div></div>
+        <div className="experience reveal"><div className="experience-art" aria-hidden="true"><img src="/media/axuan-experience-director-v4.webp" alt="" loading="lazy" decoding="async"/></div><div className="experience-title">经历的每一步，<br/>都成为创作的一部分<span>THE PATH SO FAR</span></div><div className="timeline"><article><time>2025 — 至今</time><div><h3>AIGC 影视创作与流程实践</h3><p>经历 Flow / Veo 2、Sora 2 等模型阶段，探索九宫格分镜与 Codex 智能体工作流；参与《深宫劫之奸妃当道》双团队管理并制作 AI 花絮，并担任执行导演，项目已上线红果平台</p></div><span className="current-dot"/></article><article><time>2022 / 05 — 2025 / 07</time><div><h3>中国华西 · 项目安装总工程师</h3><p>中国华西企业股份有限公司正式员工，参与四川省第四建筑有限公司武侯区亚中医疗项目，统筹四专业安装、10 人以上团队管理、甲方沟通与验收交付</p></div></article><article><time>2019 — 2022</time><div><h3>校园组织与内容创作</h3><p>四川建筑职业技术学院；社团联合会办公室副主任、易班工作站创产负责人，开展视频剪辑、组织运营与跨部门协作</p></div></article></div></div>
       </section>
 
       <section className="section works" id="work"><div className="wrap">
@@ -208,18 +210,18 @@ function App(){
 
       <section className="section creativity wrap" id="creativity" aria-labelledby="creativity-title">
         <div className="section-label reveal"><span>03 / IDEAS & EXPERIENCE</span><span>从实践中形成自己的方法</span></div>
-        <div className="section-heading reveal"><h2 id="creativity-title" aria-label="个人突出创意及经历">个人突出创意<br/><span className="dim">及经历</span></h2><p>从建模考据，到驻校培养与团队交付<br/>用真实项目，记录创意与经验的积累</p></div>
+        <div className="section-heading reveal"><h2 id="creativity-title" aria-label="个人突出创意及经历">个人突出创意<br/><span className="dim">及经历</span></h2><p>建模考据、驻校培养、工程管理与长期公益<br/>记录创意、协作与责任的持续积累</p></div>
         <div className="projects design-projects creativity-projects">{creativityProjects.map(project => <ProjectCard key={project.id} project={project} onSelect={openProject}/>)}</div>
       </section>
 
       <ContactSection onHome={() => homeMotion.current?.restart()}/>
     </main>
 
-    <dialog ref={dialog} aria-label={selected?.name || '项目详情'} className={`project-dialog ${selected?.episodes ? 'series-dialog' : ''} ${selected?.kind === 'model-research' ? 'modeling-dialog' : ''} ${selected?.kind === 'training-experience' ? 'training-dialog' : ''}`} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }}>
+    <dialog ref={dialog} aria-label={selected?.name || '项目详情'} className={`project-dialog ${selected?.episodes ? 'series-dialog' : ''} ${selected?.kind === 'model-research' ? 'modeling-dialog' : ''} ${selected?.kind === 'training-experience' ? 'training-dialog' : ''} ${selected?.kind === 'social-experience' ? 'social-dialog' : ''}`} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }}>
       {selected && <>
         <button className="dialog-close" onClick={close} aria-label="关闭项目详情" autoFocus><X size={24}/></button>
         <div className="dialog-content">
-          {selected.episodes ? <SeriesDetail episodes={selected.episodes} activeIndex={seriesEpisode} onChange={setSeriesEpisode}/> : selected.kind === 'model-research' ? <ModelResearchDetail/> : selected.kind === 'training-experience' ? <TrainingExperienceDetail/> : <>
+          {selected.episodes ? <SeriesDetail episodes={selected.episodes} activeIndex={seriesEpisode} onChange={setSeriesEpisode}/> : selected.kind === 'model-research' ? <ModelResearchDetail/> : selected.kind === 'training-experience' ? <TrainingExperienceDetail/> : selected.kind === 'social-experience' ? <SocialExperienceDetail/> : <>
             <p className="eyebrow">SELECTED WORK / {selected.id}</p><h2>{selected.name}</h2><p className="dialog-intro">{selected.intro}</p><p className="dialog-scope">{selected.scope}</p><p className="source-note">{selected.note}</p>
             {selected.video && <figure className="video-figure"><video className="project-player" src={asset(selected.video)} poster={asset(selected.image)} controls playsInline preload="metadata"/><figcaption><span><PlayCircle size={18} weight="fill"/></span>{selected.playbackCaption || '完整成片 · 建议开启声音观看'}</figcaption></figure>}
             {selected.facts && <section className="project-research"><div className="research-heading"><Sparkle size={23}/><div><span>{selected.researchLabel || 'HISTORICAL CONTEXT'}</span><h3>{selected.researchTitle || '这段复原背后的历史'}</h3></div></div><div className="fact-list">{selected.facts.map(([year,text]) => <article key={year}><strong>{year}</strong><p>{text}</p></article>)}</div><div className="research-links">{selected.references?.length > 0 && <span>资料来源</span>}{selected.references?.map(([label,url]) => <a key={url} href={url} target="_blank" rel="noreferrer">{label}<ArrowUpRight size={14}/></a>)}</div></section>}

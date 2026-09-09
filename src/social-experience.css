@@ -1,0 +1,103 @@
+.project-dialog.social-dialog{width:min(1190px,calc(100% - 40px))}
+.social-dialog .dialog-content{padding:18px clamp(24px,5vw,64px) 44px}
+.social-case{--social-line:#36333f;--social-muted:#b5b0c2}
+.social-case p{line-height:1.95}
+.social-case .eyebrow{font-size:10px;letter-spacing:.14em;color:#b4a6cb;margin:0 0 18px}
+.social-case .social-head h2{font-size:clamp(29px,3.7vw,45px);font-weight:500;line-height:1.4;letter-spacing:-.04em;margin:0 0 25px}
+.social-head h2>span{display:block;color:#a69bb9}
+.social-lead{max-width:870px;font-size:15px;color:var(--social-muted);margin:0}
+.social-employment{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);gap:48px;align-items:center;margin:42px 0 32px}
+.social-case .social-photo{margin:0;min-width:0}
+.social-photo>a{position:relative;display:block;background:#1a181e;overflow:hidden}
+.social-case .social-photo img{display:block;width:100%;height:auto;max-height:none;object-fit:contain}
+.social-photo-zoom{position:absolute;right:12px;bottom:12px;display:flex;align-items:center;gap:7px;padding:9px 12px;font-size:10px;color:#f2eef9;background:#141019df;opacity:0;transition:opacity .2s}
+.social-photo>a:is(:hover,:focus-visible) .social-photo-zoom{opacity:1}
+.social-case .social-photo figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 15px;font-size:10px;line-height:1.7;color:#aaa1b7;margin-top:12px}
+.social-photo figcaption strong{font-size:11px;font-weight:500;color:#d0c8dc}
+.social-case .social-photo figcaption>span{color:#a299b1}
+.social-employment-copy time{font-size:13px;color:var(--accent);letter-spacing:.08em}
+.social-employment-copy h3{font-size:clamp(25px,2.7vw,35px);font-weight:500;line-height:1.5;letter-spacing:-.04em;margin:21px 0 12px}
+.social-employment-copy .social-employer{font-size:15px;color:#e4deef;margin:0 0 13px}
+.social-employment-copy>p{font-size:13px;color:var(--social-muted);margin:0 0 22px}
+.social-employment-facts{margin:25px 0 24px}
+.social-employment-facts>div{display:grid;grid-template-columns:96px 1fr;gap:13px;border-top:1px solid var(--social-line);padding:13px 0;font-size:12px;line-height:1.7}
+.social-employment-facts dt{color:#a89cbb}
+.social-employment-facts dd{margin:0;color:#e0d9eb}
+.social-inline-link{display:inline-flex;align-items:center;gap:15px;font-size:12px;color:var(--accent);border-bottom:1px solid #79648e;padding-bottom:8px;line-height:1.7}
+.social-proof{border-block:1px solid var(--social-line);scroll-margin-top:24px}
+.social-proof summary{display:flex;justify-content:space-between;align-items:center;gap:20px;list-style:none;cursor:pointer;padding:23px 0}
+.social-proof summary::-webkit-details-marker{display:none}
+.social-proof summary strong{display:block;font-size:16px;font-weight:500;color:#e2daee}
+.social-proof summary small{display:block;font-size:11px;color:#9f95af;margin-top:7px}
+.social-proof summary svg{color:var(--accent);transition:transform .2s;flex-shrink:0}
+.social-proof[open] summary svg{transform:rotate(180deg)}
+.social-proof-content{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:center;padding:0 0 28px}
+.social-proof-content>p{font-size:13px;color:var(--social-muted)}
+.social-section{margin-top:58px}
+.social-section-heading{max-width:850px;margin-bottom:27px}
+.social-section-heading h3,.social-welfare h3{font-size:clamp(23px,2.5vw,31px);font-weight:500;line-height:1.5;letter-spacing:-.03em;margin:0}
+.social-section-heading>p:last-child{font-size:13px;color:var(--social-muted);margin:15px 0 0}
+.social-systems{display:flex;flex-wrap:wrap;gap:10px 28px;margin:0 0 23px;color:var(--accent);font-size:12px}
+.social-responsibilities{display:grid;grid-template-columns:1fr 1fr;gap:29px 36px;margin-top:34px}
+.social-responsibilities article{display:grid;grid-template-columns:25px 1fr;gap:13px;border-top:1px solid var(--social-line);padding-top:21px}
+.social-responsibilities article>span{font-size:10px;color:#a292b9;padding-top:5px}
+.social-responsibilities h4{font-size:17px;font-weight:500;line-height:1.6;margin:0 0 11px}
+.social-responsibilities p{font-size:12px;color:var(--social-muted);margin:0}
+.social-management{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:26px;list-style:none;padding:0;margin:31px 0}
+.social-management li{position:relative;padding-top:19px;border-top:1px solid #675873}
+.social-management li>span{font-size:11px;color:var(--accent)}
+.social-management h4{font-size:15px;font-weight:500;line-height:1.7;margin:15px 0 10px}
+.social-management p{font-size:12px;color:var(--social-muted);margin:0}
+.social-management svg{position:absolute;right:-20px;top:15px;color:#8e7fa4}
+.social-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:26px 0;border-block:1px solid var(--social-line);margin-top:34px}
+.social-results>div{padding-inline:26px;border-left:1px solid var(--social-line)}
+.social-results>div:first-child{padding-left:0;border:0}
+.social-results strong{display:block;font-size:clamp(35px,4vw,53px);font-weight:400;line-height:1.2;color:var(--accent);letter-spacing:-.04em;white-space:nowrap}
+.social-results strong>span{font-size:15px;margin-left:5px;letter-spacing:0}
+.social-results p{font-size:11px;color:#b6adbf;margin:13px 0 0;line-height:1.8}
+.social-case .social-results-note{font-size:10px;color:#8e819e;margin:12px 0 29px}
+.social-certificates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;margin:28px 0}
+.social-certificates article{min-width:0}
+.social-certificates .social-photo>a{background:#f4f4f5;aspect-ratio:3/4;display:grid;place-items:center;padding:12px}
+.social-certificates .social-photo img{height:100%;max-height:100%;object-fit:contain;background:transparent}
+.social-certificates .social-photo figcaption{display:none}
+.social-certificates h4{font-size:18px;font-weight:500;margin:19px 0 8px;line-height:1.5}
+.social-certificates article>p{font-size:11px;color:#b8afc3;margin:0 0 15px;min-height:43px}
+.social-certificates ul{list-style:none;padding:13px 0 0;margin:0;border-top:1px solid var(--social-line);font-size:10px;line-height:1.8;color:#a69ab5;display:grid;gap:6px}
+.social-welfare{border-top:1px solid #52435f;padding-top:43px}
+.social-welfare-heading{display:grid;grid-template-columns:180px minmax(0,1fr);gap:35px;align-items:center;margin-bottom:29px}
+.social-welfare-years{font-size:100px;line-height:1;color:var(--accent);letter-spacing:-.06em}
+.social-welfare-years>span{display:block;font-size:12px;line-height:1.5;letter-spacing:.03em;margin-top:15px}
+.social-welfare-heading p:last-child{font-size:13px;color:var(--social-muted);margin:15px 0 0}
+.social-donation-switch{display:flex;gap:5px;border-bottom:1px solid var(--social-line);margin-bottom:24px}
+.social-donation-switch button{background:transparent;color:#a49aad;font-size:12px;line-height:1.5;padding:14px 18px;border-bottom:2px solid transparent;margin-bottom:-1px;transition:background .2s,color .2s}
+.social-donation-switch button[aria-pressed=true]{color:var(--accent);border-bottom-color:var(--accent);background:#b69cdd0c}
+.social-donation-switch button:hover{color:#f0e5ff;background:#b69cdd0d}
+.social-donation-panel>.social-photo{max-width:900px;margin-inline:auto}
+.social-donation-panel>p{font-size:13px;color:var(--social-muted);margin:18px 0 0}
+.social-closing{border-top:1px solid var(--social-line);margin:44px 0 38px;padding-top:27px}
+.social-closing p{font-size:17px;color:#e4dcec;margin:0 0 10px}
+.social-closing>span{font-size:12px;line-height:1.8;color:#a89bb9}
+.social-case :is(a,button,summary):focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+.social-case button:active{transform:translateY(1px)}
+.project-social-experience .project-image img{object-position:center 72%}
+.creativity-projects .project:nth-child(3){margin-top:0}
+@media(max-width:900px){.social-employment{gap:28px}.social-management{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.social-management li:nth-child(2) svg{display:none}.social-welfare-heading{grid-template-columns:130px minmax(0,1fr);gap:24px}.social-certificates{gap:17px}}
+@media(max-width:640px){
+ .project-dialog.social-dialog{width:calc(100% - 22px)}
+ .social-dialog .dialog-content{padding:18px 22px 30px}
+ .social-lead{font-size:13px}.social-employment{grid-template-columns:1fr;gap:27px;margin-top:30px}
+ .social-employment>.social-photo{max-width:100%}.social-employment-copy h3{font-size:29px;margin-top:16px}
+ .social-employment-facts>div{grid-template-columns:85px 1fr;font-size:11px;gap:10px}
+ .social-proof-content{grid-template-columns:1fr;gap:12px}.social-proof summary strong{font-size:15px}
+ .social-section{margin-top:40px}.social-section-heading h3,.social-welfare h3{font-size:24px}
+ .social-responsibilities{grid-template-columns:1fr;gap:23px}.social-responsibilities p{font-size:13px}
+ .social-systems{gap:10px 18px;font-size:11px}
+ .social-management{grid-template-columns:1fr;gap:23px}.social-management li{padding-left:32px}.social-management li>span{position:absolute;top:23px;left:0}.social-management h4{margin-top:0;font-size:16px}.social-management p{font-size:13px}.social-management svg{display:none}
+ .social-results{grid-template-columns:1fr;gap:22px;padding:23px 0}.social-results>div{border:0;padding:0;display:grid;grid-template-columns:125px 1fr;align-items:center;gap:12px}.social-results strong{font-size:38px}.social-results strong>span{font-size:12px}.social-results p{margin:0}
+ .social-certificates{grid-template-columns:1fr;gap:29px}.social-certificates .social-photo>a{aspect-ratio:auto;max-width:100%;padding:14px}.social-certificates .social-photo img{height:auto;max-height:430px}.social-certificates article>p{min-height:0;font-size:12px}.social-certificates ul{font-size:11px}
+ .social-welfare{padding-top:29px}.social-welfare-heading{grid-template-columns:1fr;gap:25px}.social-welfare-years{font-size:74px;display:flex;align-items:baseline;gap:18px}.social-welfare-years>span{margin:0}
+ .social-donation-switch{gap:0;justify-content:space-between}.social-donation-switch button{font-size:11px;padding:12px 7px}
+ .social-photo-zoom{opacity:1}.social-closing p{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.social-case *{transition:none!important}}
