@@ -113,7 +113,7 @@ export function TrainingExperienceDetail() {
 
     <section className="training-section dialog-jump-target" id="training-curriculum" tabIndex={-1} aria-labelledby="training-curriculum-heading">
       <div className="training-section-head"><span className="eyebrow">TEACHING SCOPE</span><h3 id="training-curriculum-heading">从视觉基础，到行业与团队认知</h3></div>
-      <p className="training-description">授课内容围绕《AI 反思录》持续整理，以下按课件主题介绍教学范围与学习目标</p>
+      <p className="training-description">授课内容来自我的课件（我自己纯手工制作的上百页 PPT，无网络下载；每次工作中遇到问题，我都会主动记录并思考解决过程，既是课件，也是我的错题集），以下按主题介绍教学范围与学习目标</p>
       <div className="training-curriculum">{courseGroups.map((group, index) => <details key={group.title} open={index === 0 ? true : undefined}><summary><span className="curriculum-index">0{index + 1}</span><span><strong>{group.title}</strong><small>{group.subtitle}</small></span><CaretDown size={19}/></summary><div className="curriculum-topics">{group.topics.map(([title, text]) => <div key={title}><h4>{title}</h4><p>{text}</p></div>)}</div></details>)}</div>
       <Photo name="teaching-analysis" label="构图案例讲解" caption="结合画面分析，帮助学生理解视觉与叙事的关系"/>
     </section>

@@ -57,9 +57,8 @@ export function LifeSection() {
         </div>
 
         <div className="life-personality life-block">
-          <div className="life-block-heading"><span className="life-kicker">ENTP / HOW I THINK & WORK</span><h3>好奇、机敏，在交流中打开新思路</h3><p>我认同自己的 ENTP 特点：喜欢追问、联想和开放讨论，敢于尝试不同办法，再用逻辑筛选可行方向，也愿意用轻松的表达让协作更顺畅</p></div>
+          <div className="life-block-heading"><span className="life-kicker">ENTP / HOW I THINK & WORK</span><h3>好奇、机敏，在交流中打开新思路</h3><p>我的性格是 ENTP，喜欢追问、联想和开放讨论，敢于尝试不同办法，再用逻辑筛选可行方向，也愿意用轻松的表达让协作更顺畅（同性格人物参考：狐尼克、五条悟、奥德修斯、孙悟空、达芬奇）</p></div>
           <div className="life-work-traits"><article><span>创意</span><h4>把不同领域连起来</h4><p>把音乐的节奏、工程的空间感与影像叙事联系起来，在 AIGC 中先打开多种可能，再用小样验证方向</p></article><article><span>执行</span><h4>把复杂问题拆清楚</h4><p>习惯追问原理、梳理限制，把创意拆成步骤、标准与反馈节点，减少反复沟通和无效尝试</p></article><article><span>带队</span><h4>让成员理解，也能参与</h4><p>先讲清目标和原因，再给尝试与提问的空间，用具体反馈和实际支持建立信任，让大家更容易主动配合</p></article></div>
-          <p className="life-inspirations"><strong>我欣赏的角色与人物</strong>狐尼克的机敏与幽默、五条悟的自信与跳脱、奥德修斯的应变、孙悟空的破局精神，以及达芬奇的跨界好奇，都是我喜欢的灵感参照</p>
           <details className="life-dimensions"><summary>荣格八维 · 自测摘要 <CaretDown size={15} aria-hidden="true"/></summary><dl>{dimensions.map(([code,label,value])=><div key={code}><dt><strong>{code}</strong> {label}</dt><dd>{value.toFixed(1)}</dd></div>)}</dl><p>2025 年 12 月的原始维度记录，用于自我观察，实际合作方式结合项目与团队经历来看</p></details>
         </div>
         <LifeAlbum/>
