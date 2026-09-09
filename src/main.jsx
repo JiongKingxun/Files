@@ -9,6 +9,7 @@ import { Portrait } from './Portrait.jsx';
 import { AboutPortrait } from './AboutPortrait.jsx';
 import { videoProjects } from './video-projects.js';
 import { modelResearchProject, ModelResearchDetail } from './ModelResearch.jsx';
+import { trainingExperienceProject, TrainingExperienceDetail } from './TrainingExperience.jsx';
 import { projectCovers } from './project-covers.js';
 import { ContactSection } from './ContactSection.jsx';
 import { CreativeTools } from './CreativeTools.jsx';
@@ -49,6 +50,7 @@ const projects = [
   },
   ...videoProjects,
   modelResearchProject,
+  trainingExperienceProject,
 ];
 
 const projectTotal = String(projects.length).padStart(2, '0');
@@ -73,9 +75,9 @@ const skillCards = [
 
 function ProjectCard({ project:p, onSelect }) {
   const isCollection = Boolean(p.episodes);
-  return <button className={`project reveal ${p.featured ? 'project-featured' : ''} ${isCollection ? 'project-series-collection' : ''} ${p.kind === 'model-research' ? 'project-model-research' : ''}`} onClick={() => onSelect(p)} aria-label={isCollection ? '打开高欢前传连续影像 06 至 08' : `${p.video ? '播放' : '查看'}${p.name}`}>
+  return <button className={`project reveal ${p.featured ? 'project-featured' : ''} ${isCollection ? 'project-series-collection' : ''} ${p.kind === 'model-research' ? 'project-model-research' : ''} ${p.kind === 'training-experience' ? 'project-training-experience' : ''}`} onClick={() => onSelect(p)} aria-label={isCollection ? '打开高欢前传连续影像 06 至 08' : `${p.video ? '播放' : '查看'}${p.name}`}>
     <div className="project-image">
-      <img src={asset(projectCovers[p.id] || p.image)} alt={`${p.name} · 氛围封面`} loading="lazy" decoding="async" width="1600" height="900"/>
+      <img src={asset(projectCovers[p.id] || p.image)} alt={p.kind === 'training-experience' ? '钟启轩驻校授课现场' : `${p.name} · 氛围封面`} loading="lazy" decoding="async" width="1600" height="900"/>
       <span className="project-number">{p.id} / {projectTotal}</span>
       <span className="project-open">{isCollection ? <FilmStrip size={29} weight="fill"/> : p.video ? <PlayCircle size={31} weight="fill"/> : <ArrowUpRight size={27}/>}</span>
       {(p.video || isCollection) && <span className="video-duration">{isCollection ? '03 EPISODES' : p.duration}</span>}
@@ -156,7 +158,7 @@ function App(){
   useEffect(() => {
     let ctx;
     if (selected && dialog.current && !dialog.current.open) {
-      dialog.current.showModal(); document.body.style.overflow = 'hidden';
+      dialog.current.showModal(); dialog.current.scrollTop = 0; document.body.style.overflow = 'hidden';
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) ctx = gsap.context(() => gsap.fromTo('.dialog-content', { opacity:0, y:20 }, { opacity:1, y:0, duration:.4, ease:'power3.out' }), dialog);
     } else if (!selected) document.body.style.overflow = '';
     return () => { ctx?.revert(); document.body.style.overflow = ''; };
@@ -206,18 +208,18 @@ function App(){
 
       <section className="section creativity wrap" id="creativity" aria-labelledby="creativity-title">
         <div className="section-label reveal"><span>03 / IDEAS & EXPERIENCE</span><span>从实践中形成自己的方法</span></div>
-        <div className="section-heading reveal"><h2 id="creativity-title" aria-label="个人突出创意及经历">个人突出创意<br/><span className="dim">及经历</span></h2><p>从历史考据到 Blender 建模复原<br/>用真实项目，记录创意的形成与落地</p></div>
+        <div className="section-heading reveal"><h2 id="creativity-title" aria-label="个人突出创意及经历">个人突出创意<br/><span className="dim">及经历</span></h2><p>从建模考据，到驻校培养与团队交付<br/>用真实项目，记录创意与经验的积累</p></div>
         <div className="projects design-projects creativity-projects">{creativityProjects.map(project => <ProjectCard key={project.id} project={project} onSelect={openProject}/>)}</div>
       </section>
 
       <ContactSection onHome={() => homeMotion.current?.restart()}/>
     </main>
 
-    <dialog ref={dialog} aria-label={selected?.name || '项目详情'} className={`project-dialog ${selected?.episodes ? 'series-dialog' : ''} ${selected?.kind === 'model-research' ? 'modeling-dialog' : ''}`} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }}>
+    <dialog ref={dialog} aria-label={selected?.name || '项目详情'} className={`project-dialog ${selected?.episodes ? 'series-dialog' : ''} ${selected?.kind === 'model-research' ? 'modeling-dialog' : ''} ${selected?.kind === 'training-experience' ? 'training-dialog' : ''}`} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }}>
       {selected && <>
         <button className="dialog-close" onClick={close} aria-label="关闭项目详情" autoFocus><X size={24}/></button>
         <div className="dialog-content">
-          {selected.episodes ? <SeriesDetail episodes={selected.episodes} activeIndex={seriesEpisode} onChange={setSeriesEpisode}/> : selected.kind === 'model-research' ? <ModelResearchDetail/> : <>
+          {selected.episodes ? <SeriesDetail episodes={selected.episodes} activeIndex={seriesEpisode} onChange={setSeriesEpisode}/> : selected.kind === 'model-research' ? <ModelResearchDetail/> : selected.kind === 'training-experience' ? <TrainingExperienceDetail/> : <>
             <p className="eyebrow">SELECTED WORK / {selected.id}</p><h2>{selected.name}</h2><p className="dialog-intro">{selected.intro}</p><p className="dialog-scope">{selected.scope}</p><p className="source-note">{selected.note}</p>
             {selected.video && <figure className="video-figure"><video className="project-player" src={asset(selected.video)} poster={asset(selected.image)} controls playsInline preload="metadata"/><figcaption><span><PlayCircle size={18} weight="fill"/></span>{selected.playbackCaption || '完整成片 · 建议开启声音观看'}</figcaption></figure>}
             {selected.facts && <section className="project-research"><div className="research-heading"><Sparkle size={23}/><div><span>{selected.researchLabel || 'HISTORICAL CONTEXT'}</span><h3>{selected.researchTitle || '这段复原背后的历史'}</h3></div></div><div className="fact-list">{selected.facts.map(([year,text]) => <article key={year}><strong>{year}</strong><p>{text}</p></article>)}</div><div className="research-links">{selected.references?.length > 0 && <span>资料来源</span>}{selected.references?.map(([label,url]) => <a key={url} href={url} target="_blank" rel="noreferrer">{label}<ArrowUpRight size={14}/></a>)}</div></section>}

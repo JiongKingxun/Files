@@ -6,7 +6,7 @@ export const projectCovers = {
   '04': 'covers/moonlight.webp',
   '05—07': 'covers/gaohuan.webp',
   '08': 'covers/research.webp',
-  '09': 'covers/space.webp',
+  '09': 'training/teaching-composition.webp',
   '10': 'covers/storyboard.webp',
   '11': 'covers/team.webp',
 };
