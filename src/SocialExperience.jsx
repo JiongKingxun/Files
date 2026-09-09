@@ -3,6 +3,7 @@ import { ArrowDown, ArrowRight, ArrowUpRight, CaretDown, MagnifyingGlassPlus } f
 import './social-experience.css';
 
 const media = name => `/media/social/${name}.webp`;
+const imageSizes = { 'huashi-portrait':[1086,1448], 'employment-proof':[1280,1785], 'site-team':[1263,1245], 'site-inspection':[1448,1086], 'document-controller':[1501,2123], 'installation-supervisor':[1501,2123], 'safety-c3':[1501,2227], 'unicef-start':[1299,980], 'unicef-year-2':[1810,1280], 'unicef-year-3':[1737,1280], 'unicef-year-4':[1737,1280], 'unicef-year-5':[1737,1280] };
 
 export const socialExperienceProject = {
   id: '10',
@@ -48,7 +49,7 @@ const donations = [
 function EvidenceImage({ file, label, caption, className = '' }) {
   return <figure className={`social-photo ${className}`}>
     <a href={media(file)} target="_blank" rel="noreferrer" aria-label={`放大查看${label}`}>
-      <img src={media(file)} alt={label} loading="lazy" decoding="async"/>
+      <img src={media(file)} alt={label} width={imageSizes[file][0]} height={imageSizes[file][1]} loading="lazy" decoding="async"/>
       <span className="social-photo-zoom"><MagnifyingGlassPlus size={17}/> 放大查看</span>
     </a>
     <figcaption><strong>{label}</strong>{caption && <span>{caption}</span>}</figcaption>
@@ -91,7 +92,7 @@ export function SocialExperienceDetail() {
       <div className="social-section-heading"><p className="eyebrow">THE PROJECT</p><h3 id="social-project-title">武侯区亚中医疗项目</h3><p>围绕设备安装与多专业系统协同，承担从计划实施、人员组织到调试验收、工程资料的管理职责</p></div>
       <div className="social-systems"><span>给排水</span><span>暖通空调</span><span>建筑电气</span><span>消防系统</span></div>
       <EvidenceImage file="site-team" label="安装工程现场协同" caption="管线与设备检查现场"/>
-      <div className="social-responsibilities">{responsibilities.map(([title,body],index)=><article key={title}><span>0{index+1}</span><div><h4>{title}</h4><p>{body}</p></div></article>)}</div>
+      <div className="social-responsibilities dialog-jump-target" id="social-responsibilities" tabIndex={-1} role="region" aria-label="工程职责与团队管理">{responsibilities.map(([title,body],index)=><article key={title}><span>0{index+1}</span><div><h4>{title}</h4><p>{body}</p></div></article>)}</div>
     </section>
 
     <section className="social-section" aria-labelledby="social-management-title">

@@ -1,0 +1,62 @@
+.life-section{padding:0 0 65px;scroll-margin-top:108px}
+.life-disclosure{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.life-summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 0;cursor:pointer}
+.life-summary::-webkit-details-marker,.life-dimensions summary::-webkit-details-marker{display:none}
+.life-summary-copy{display:block}
+.life-kicker{display:block;font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:400;line-height:1.8;margin:0 0 12px}
+.life-summary h2{font-size:21px;line-height:1.5;font-weight:500;margin:0 0 7px;color:#e2dfea}
+.life-summary-note{display:block;font-size:12px;color:var(--muted);line-height:1.8}
+.life-disclosure-chevron{color:var(--accent);flex:none;transition:transform .2s}
+.life-disclosure[open]>.life-summary .life-disclosure-chevron{transform:rotate(180deg)}
+.life-summary:hover h2{color:var(--accent)}
+.life-summary:focus-visible,.life-dimensions summary:focus-visible{outline:2px solid var(--accent);outline-offset:7px}
+.life-content{padding:8px 0 28px}
+.life-content h3,.life-content h4{font-weight:500;color:#e2dfea}
+.life-content h3{font-size:23px;line-height:1.6;margin:0 0 14px}
+.life-content h4{font-size:15px;line-height:1.7;margin:0 0 9px}
+.life-content p{color:var(--muted);font-size:14px;line-height:1.95;margin:0}
+.life-intro{display:grid;grid-template-columns:.8fr 1.5fr;gap:50px;padding:28px 0}
+.life-intro>p{max-width:760px}
+.life-interests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px;padding:8px 0 40px}
+.life-interests strong{display:block;font-weight:500;font-size:15px;color:#d7d1e8;margin-bottom:8px}
+.life-block{padding:36px 0;border-top:1px solid var(--line)}
+.life-block-heading{max-width:820px}
+.life-block-heading .life-kicker,.life-album-copy .life-kicker{font-size:10px;letter-spacing:.12em;margin-bottom:10px}
+.life-campus-roles,.life-work-traits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:35px;margin-top:27px}
+.life-campus-activities{margin-top:25px;padding-top:20px;border-top:1px solid #302e3580;display:grid;grid-template-columns:160px 1fr;gap:6px 25px}
+.life-campus-activities h4{grid-row:1/3}
+.life-campus-activities .life-campus-honors{font-size:12px;color:#9995a8}
+.life-work-traits article>span{display:block;color:var(--accent);font-size:11px;margin-bottom:10px}
+.life-personality .life-inspirations{font-size:12px;margin-top:25px;color:#aaa4b9;max-width:950px}
+.life-inspirations strong{font-weight:500;color:#cbc3dd;margin-right:14px}
+.skill-button{text-align:left;width:100%;min-width:0}
+.skill-button .skill-tags{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.skill-button .skill-tags svg{color:var(--accent);flex:none}
+.skill-button:hover .skill-tags svg{transform:translate(2px,-2px)}
+.dialog-jump-target:focus{outline:none}
+.life-dimensions{margin-top:26px;color:var(--muted)}
+.life-dimensions summary{display:inline-flex;align-items:center;gap:18px;list-style:none;font-size:12px;padding:8px 0;cursor:pointer}
+.life-dimensions[open] summary svg{transform:rotate(180deg)}
+.life-dimensions dl{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 25px;margin:15px 0}
+.life-dimensions dl>div{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid #302e3580;padding:0 0 9px;font-size:12px}
+.life-dimensions dt strong{color:#c8c1dc;font-weight:500;margin-right:5px}
+.life-dimensions dd{margin:0;font-variant-numeric:tabular-nums;color:#c8c1dc}
+.life-dimensions>p{font-size:11px}
+.life-album{padding:38px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(30px,5vw,85px);align-items:center}
+.life-album-photo{margin:0;background:#0b0d0d;width:100%;height:500px}
+.life-album-photo a{display:block;width:100%;height:100%;cursor:zoom-in}
+.life-album-photo img{width:100%;height:100%;object-fit:contain}
+.life-photo-caption{margin-top:34px;min-height:116px}
+.life-photo-caption>span{font-size:11px;letter-spacing:.08em;color:var(--accent);font-variant-numeric:tabular-nums}
+.life-photo-caption h4{margin-top:15px}
+.life-photo-caption p{font-size:12px}
+.life-album-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.life-album-controls button{width:44px;height:44px;display:grid;place-items:center;background:none;border:1px solid #514b61;color:var(--accent);transition:background .2s}
+.life-album-controls button:hover{background:#e1d9ff12}
+.life-album-controls>span{font-size:11px;color:#9995a8;margin-left:8px}
+.life-collapse{display:flex;align-items:center;gap:14px;background:none;color:var(--accent);font-size:12px;padding:12px 0;margin-left:auto}
+@media(min-width:1201px){.nav{gap:clamp(16px,1.5vw,28px)}.nav a{white-space:nowrap}.nav-wrap{gap:20px}}
+@media(min-width:1001px) and (max-width:1200px){.menu-button{display:grid;place-items:center}.nav-contact{margin-left:auto}.nav{display:none;position:absolute;top:84px;left:0;right:0;background:#0b0e0c;padding:24px 40px;border-bottom:1px solid var(--line)}.nav.open{display:flex;flex-direction:column;gap:18px}.nav a{font-size:16px;padding:5px 0}.header.is-scrolled .nav{top:72px}}
+@media(max-width:1200px){.nav .nav-index{display:inline-block}}
+@media(max-width:1000px){.life-intro{grid-template-columns:1fr;gap:5px}.life-interests,.life-campus-roles,.life-work-traits{gap:23px}.life-album-photo{height:440px}.life-dimensions dl{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.life-section{padding-bottom:40px;scroll-margin-top:94px}.life-summary{padding:25px 0;gap:15px}.life-summary h2{font-size:19px}.life-summary-note{font-size:11px}.life-content h3{font-size:21px}.life-content p{font-size:13px}.life-intro{padding-top:18px}.life-interests,.life-campus-roles,.life-work-traits{grid-template-columns:1fr;gap:22px}.life-interests{padding-bottom:30px}.life-block{padding:29px 0}.life-campus-activities{display:block}.life-campus-activities .life-campus-honors{margin-top:10px}.life-dimensions dl{gap:15px 20px}.life-dimensions dt{font-size:11px}.life-dimensions dt strong{display:block;margin-bottom:4px}.life-dimensions dd{align-self:end}.life-album{grid-template-columns:1fr;gap:25px;padding:30px 0}.life-album-photo{height:400px;height:min(110vw,440px)}.life-photo-caption{margin-top:24px;min-height:96px}.life-album-controls>span{font-size:10px;margin-left:3px}.life-dimensions>p{font-size:11px}}

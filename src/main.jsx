@@ -11,6 +11,7 @@ import { videoProjects } from './video-projects.js';
 import { modelResearchProject, ModelResearchDetail } from './ModelResearch.jsx';
 import { trainingExperienceProject, TrainingExperienceDetail } from './TrainingExperience.jsx';
 import { socialExperienceProject, SocialExperienceDetail } from './SocialExperience.jsx';
+import { LifeSection } from './LifeSection.jsx';
 import { projectCovers } from './project-covers.js';
 import { ContactSection } from './ContactSection.jsx';
 import { CreativeTools } from './CreativeTools.jsx';
@@ -24,6 +25,7 @@ import './anime.css';
 import './project-covers.css';
 import './sections.css';
 import './portrait-sections.css';
+import './life-section.css';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -69,10 +71,10 @@ const filmCollection = [
 ];
 
 const skillCards = [
-  { n:'01', Icon:PencilRuler, title:'视觉与品牌表达', en:'VISUAL & BRAND', body:'从概念、风格到图像表达，建立统一的视觉语言，让设计回应品牌和内容的真实需求', tags:'视觉概念 / 风格探索 / 图像设计' },
-  { n:'02', Icon:FilmStrip, title:'AIGC 影视全流程', en:'IDEA TO FINAL FRAME', body:'贯通编导、角色场景资产、导演图、AI 视频与后期剪辑，理解每一环节对最终成片的影响', tags:'剧本 / 图片 / 视频 / 剪辑' },
-  { n:'03', Icon:Cube, title:'工程思维与交付', en:'SYSTEMS THAT DELIVER', body:'把复杂目标拆成任务与节点，用标准、文档和版本管理控制过程，让创意落在可执行的计划里', tags:'空间控制 / 项目统筹 / 标准化' },
-  { n:'04', Icon:UsersThree, title:'培训与团队协作', en:'BUILD WITH PEOPLE', body:'在短剧项目中参与双团队管理，带领零基础大学生团队进入 AIGC 制作，把知识、分工与反馈组织成可执行的创作过程', tags:'双团队统筹 / 零基础带教 / 协同交付' },
+  { n:'01', Icon:PencilRuler, title:'视觉与品牌表达', en:'VISUAL & BRAND', body:'从概念、风格到图像表达，建立统一的视觉语言，让设计回应品牌和内容的真实需求', tags:'视觉概念 / 风格探索 / 图像设计', project:modelResearchProject },
+  { n:'02', Icon:FilmStrip, title:'AIGC 影视全流程', en:'IDEA TO FINAL FRAME', body:'贯通编导、角色场景资产、导演图、AI 视频与后期剪辑，理解每一环节对最终成片的影响', tags:'剧本 / 图片 / 视频 / 剪辑', project:trainingExperienceProject, jumpTarget:'training-curriculum' },
+  { n:'03', Icon:Cube, title:'工程思维与交付', en:'SYSTEMS THAT DELIVER', body:'把复杂目标拆成任务与节点，用标准、文档和版本管理控制过程，让创意落在可执行的计划里', tags:'空间控制 / 项目统筹 / 标准化', project:socialExperienceProject, jumpTarget:'social-responsibilities' },
+  { n:'04', Icon:UsersThree, title:'培训与团队协作', en:'BUILD WITH PEOPLE', body:'在短剧项目中参与双团队管理，带领零基础大学生团队进入 AIGC 制作，把知识、分工与反馈组织成可执行的创作过程', tags:'双团队统筹 / 零基础带教 / 协同交付', project:trainingExperienceProject, jumpTarget:'training-results' },
 ];
 
 function ProjectCard({ project:p, onSelect }) {
@@ -158,12 +160,19 @@ function App(){
   }, []);
 
   useEffect(() => {
-    let ctx;
+    let ctx, frame;
     if (selected && dialog.current && !dialog.current.open) {
       dialog.current.showModal(); dialog.current.scrollTop = 0; document.body.style.overflow = 'hidden';
-      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) ctx = gsap.context(() => gsap.fromTo('.dialog-content', { opacity:0, y:20 }, { opacity:1, y:0, duration:.4, ease:'power3.out' }), dialog);
+      if (!selected.jumpTarget && !matchMedia('(prefers-reduced-motion: reduce)').matches) ctx = gsap.context(() => gsap.fromTo('.dialog-content', { opacity:0, y:20 }, { opacity:1, y:0, duration:.4, ease:'power3.out' }), dialog);
+      if (selected.jumpTarget) frame = requestAnimationFrame(() => {
+        const target = dialog.current.querySelector(`#${selected.jumpTarget}`);
+        if (target) {
+          target.focus({preventScroll:true});
+          dialog.current.scrollTo({top:dialog.current.scrollTop + target.getBoundingClientRect().top - dialog.current.getBoundingClientRect().top - 76,behavior:'instant'});
+        }
+      });
     } else if (!selected) document.body.style.overflow = '';
-    return () => { ctx?.revert(); document.body.style.overflow = ''; };
+    return () => { ctx?.revert(); cancelAnimationFrame(frame); document.body.style.overflow = ''; };
   }, [selected]);
 
   const close = () => { if (dialog.current?.open) dialog.current.close(); setSelected(null); };
@@ -174,7 +183,7 @@ function App(){
     <a className="skip" href="#about">跳转到个人介绍</a>
     <header className={`header ${scrolled ? 'is-scrolled' : ''}`}><div className="nav-wrap wrap">
       <a className="logo name-logo" href="#home" aria-label="钟启轩 首页" onClick={() => homeMotion.current?.restart()}>钟启轩<span className="logo-mark" aria-hidden="true"/></a>
-      <nav id="main-navigation" className={menu ? 'nav open' : 'nav'} aria-label="主导航">{[['home','首页'],['about','关于我'],['expertise','个人优势'],['work','精选作品'],['creativity','个人突出创意及经历']].map(([id,label],i) => <a key={id} href={`#${id}`} aria-current={activeSection === id ? 'location' : undefined} onClick={() => activateNav(id)}>{id === 'home' ? <IconMotion ref={homeMotion} className="home-icon-motion" accent="#e1d9ff" light="#f3f0ff" foreground="#f0eff8" background="#0b0e0c" muted="#a7a4b1" bar="#101111" label="首页" autoplay={false} loop={false} presentation="inline" aria-hidden="true"/> : <span className="nav-index" aria-hidden="true">0{i+1}</span>}{label}</a>)}</nav>
+      <nav id="main-navigation" className={menu ? 'nav open' : 'nav'} aria-label="主导航">{[['home','首页'],['about','关于我'],['expertise','个人优势'],['work','精选作品'],['creativity','个人突出创意及经历'],['life','关于生活中的我']].map(([id,label],i) => <a key={id} href={`#${id}`} aria-current={activeSection === id ? 'location' : undefined} onClick={() => activateNav(id)}>{id === 'home' ? <IconMotion ref={homeMotion} className="home-icon-motion" accent="#e1d9ff" light="#f3f0ff" foreground="#f0eff8" background="#0b0e0c" muted="#a7a4b1" bar="#101111" label="首页" autoplay={false} loop={false} presentation="inline" aria-hidden="true"/> : <span className="nav-index" aria-hidden="true">0{i+1}</span>}{label}</a>)}</nav>
       <a className="nav-contact" href="#contact">聊聊合作 <ArrowUpRight size={17}/></a>
       <button className="menu-button" aria-label={menu ? '关闭导航' : '打开导航'} aria-expanded={menu} aria-controls="main-navigation" onClick={() => setMenu(!menu)}>{menu ? <X size={24}/> : <List size={24}/>}</button>
     </div></header>
@@ -197,7 +206,7 @@ function App(){
       <section className="section about wrap" id="about">
         <div className="section-label reveal"><span>01 / ABOUT ME</span><span>有想象力，也有执行力</span></div>
         <div className="about-grid reveal"><AboutPortrait/><div className="about-copy"><div className="eyebrow muted">DESIGNER / CREATOR / TEAM BUILDER</div><h2>感性的创作<br/><span className="dim">理性的落地</span></h2><p>我关注视觉与品牌表达，也探索 AI 如何参与真实的影视生产，从校园内容创作、工程项目管理，到 AIGC 影视实践，我习惯把想法拆解成清晰的任务，再一步步完成交付</p><p>从 Flow / Veo 2、Sora 2 到持续迭代的视频模型，我一路积累生成、分镜与后期经验，也在项目中参与双团队管理，带领零基础大学生团队进入 AIGC 制作</p><p className="early-practice">作为国内较早投入 Codex 与智能体工作流实践的创作者，我把工具用于任务拆解、资料整理与流程自动化，再将经验沉淀为教学材料与团队方法</p><div className="about-contacts"><a href="mailto:Axuanxxx@foxmail.com">Axuanxxx@foxmail.com <ArrowUpRight size={17}/></a><a href="tel:17348060633">173 4806 0633 <ArrowUpRight size={17}/></a></div></div></div>
-        <section className="expertise about-expertise" id="expertise" aria-labelledby="expertise-title"><div className="section-label reveal"><span>WHAT I BRING</span><span>个人优势</span></div><div className="section-heading reveal"><h2 id="expertise-title">创意之外，<br/><span className="dim">让项目向前</span></h2><p>既能参与具体的视觉制作，<br/>也能统筹流程，与团队一起完成交付</p></div><div className="skills">{skillCards.map(({n,Icon,title,en,body,tags}) => <article className="skill reveal" key={n}><div className="skill-top"><Icon size={34} weight="light"/><span>{n}</span></div><p className="skill-en">{en}</p><h3>{title}</h3><p className="skill-body">{body}</p><div className="skill-tags">{tags}</div></article>)}</div><CreativeTools/></section>
+        <section className="expertise about-expertise" id="expertise" aria-labelledby="expertise-title"><div className="section-label reveal"><span>WHAT I BRING</span><span>个人优势</span></div><div className="section-heading reveal"><h2 id="expertise-title">创意之外，<br/><span className="dim">让项目向前</span></h2><p>既能参与具体的视觉制作，<br/>也能统筹流程，与团队一起完成交付</p></div><div className="skills">{skillCards.map(({n,Icon,title,en,body,tags,project,jumpTarget}) => <button type="button" className="skill skill-button reveal" key={n} aria-label={`查看${title}对应经历`} aria-haspopup="dialog" onClick={() => openProject({...project,jumpTarget,fromSkills:true})}><div className="skill-top"><Icon size={34} weight="light"/><span>{n}</span></div><p className="skill-en">{en}</p><h3>{title}</h3><p className="skill-body">{body}</p><div className="skill-tags"><span>{tags}</span><ArrowUpRight size={17} aria-hidden="true"/></div></button>)}</div><CreativeTools/></section>
         <div className="experience reveal"><div className="experience-art" aria-hidden="true"><img src="/media/axuan-experience-director-v4.webp" alt="" loading="lazy" decoding="async"/></div><div className="experience-title">经历的每一步，<br/>都成为创作的一部分<span>THE PATH SO FAR</span></div><div className="timeline"><article><time>2025 — 至今</time><div><h3>AIGC 影视创作与流程实践</h3><p>经历 Flow / Veo 2、Sora 2 等模型阶段，探索九宫格分镜与 Codex 智能体工作流；参与《深宫劫之奸妃当道》双团队管理并制作 AI 花絮，并担任执行导演，项目已上线红果平台</p></div><span className="current-dot"/></article><article><time>2022 / 05 — 2025 / 07</time><div><h3>中国华西 · 项目安装总工程师</h3><p>中国华西企业股份有限公司正式员工，参与四川省第四建筑有限公司武侯区亚中医疗项目，统筹四专业安装、10 人以上团队管理、甲方沟通与验收交付</p></div></article><article><time>2019 — 2022</time><div><h3>校园组织与内容创作</h3><p>四川建筑职业技术学院；社团联合会办公室副主任、易班工作站创产负责人，开展视频剪辑、组织运营与跨部门协作</p></div></article></div></div>
       </section>
 
@@ -214,6 +223,7 @@ function App(){
         <div className="projects design-projects creativity-projects">{creativityProjects.map(project => <ProjectCard key={project.id} project={project} onSelect={openProject}/>)}</div>
       </section>
 
+      <LifeSection/>
       <ContactSection onHome={() => homeMotion.current?.restart()}/>
     </main>
 
@@ -228,7 +238,7 @@ function App(){
             {selected.images?.map((im,i) => <figure key={im}><img src={asset(im)} alt={selected.captions[i]} loading="lazy"/><figcaption><span>0{i+1}</span>{selected.captions[i]}</figcaption></figure>)}
             {selected.steps && <ol className="workflow">{selected.steps.map(step => <li key={step}>{step}</li>)}</ol>}
           </>}
-          <button className="close-bottom" onClick={close}>返回作品集 <ArrowRight size={19}/></button>
+          <button className="close-bottom" onClick={close}>{selected.fromSkills ? '返回个人优势' : '返回作品集'} <ArrowRight size={19}/></button>
         </div>
       </>}
     </dialog>

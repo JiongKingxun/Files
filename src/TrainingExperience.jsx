@@ -73,9 +73,10 @@ const productions = [
 ];
 
 function Photo({ name, label, caption, className = '' }) {
+  const portrait = name === 'director-at-work' || name === 'production-monitor';
   return <figure className={`training-photo ${className}`}>
     <a href={media(name)} target="_blank" rel="noreferrer" aria-label={`放大查看${label}`}>
-      <img src={media(name)} alt={label} loading="lazy" decoding="async"/>
+      <img src={media(name)} alt={label} width={portrait ? 1086 : 1448} height={portrait ? 1448 : 1086} loading="lazy" decoding="async"/>
       <span className="training-photo-zoom"><MagnifyingGlassPlus size={18}/> 放大查看</span>
     </a>
     <figcaption><strong>{label}</strong>{caption && <span>{caption}</span>}</figcaption>
@@ -96,7 +97,7 @@ export function TrainingExperienceDetail() {
       <div className="training-opening-copy"><span className="eyebrow">LEARNING THROUGH PRODUCTION</span><h3>从零经验，<br/>到完成商业交付</h3><p>学生的学习直接进入商业订单，在真实项目中积累制作经验，我同时承担授课、带教、团队统筹与甲方沟通，让学习进度与交付目标保持一致</p><div className="training-role-lines"><span>教学端 <b>课程讲解与制作指导</b></span><span>项目端 <b>学生团队与项目团队并行管理</b></span><span>合作端 <b>甲方对接与成果交付</b></span></div></div>
     </div>
 
-    <dl className="training-metrics" aria-label="培养与交付成果">
+    <dl className="training-metrics dialog-jump-target" id="training-results" tabIndex={-1} aria-label="培养与交付成果">
       <div><dt><strong>20</strong><span>位</span></dt><dd>零经验大学生带队培养</dd></div>
       <div><dt><strong>03</strong><span>部</span></dt><dd>商业漫剧并行推进与交付</dd></div>
       <div><dt><strong>15</strong><span>天</span></dt><dd>《血染凤印》视频生成与粗剪</dd></div>
@@ -110,7 +111,7 @@ export function TrainingExperienceDetail() {
       <Photo name="classroom-team" label="学生团队学习与项目讨论" caption="商业实训中的集体学习现场"/>
     </section>
 
-    <section className="training-section" aria-labelledby="training-curriculum-heading">
+    <section className="training-section dialog-jump-target" id="training-curriculum" tabIndex={-1} aria-labelledby="training-curriculum-heading">
       <div className="training-section-head"><span className="eyebrow">TEACHING SCOPE</span><h3 id="training-curriculum-heading">从视觉基础，到行业与团队认知</h3></div>
       <p className="training-description">授课内容围绕《AI 反思录》持续整理，以下按课件主题介绍教学范围与学习目标</p>
       <div className="training-curriculum">{courseGroups.map((group, index) => <details key={group.title} open={index === 0 ? true : undefined}><summary><span className="curriculum-index">0{index + 1}</span><span><strong>{group.title}</strong><small>{group.subtitle}</small></span><CaretDown size={19}/></summary><div className="curriculum-topics">{group.topics.map(([title, text]) => <div key={title}><h4>{title}</h4><p>{text}</p></div>)}</div></details>)}</div>
