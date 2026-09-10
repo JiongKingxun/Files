@@ -1,0 +1,17 @@
+.resume-downloads{position:relative;width:100%;max-width:390px}
+.contact-portrait .resume-download-trigger{background:transparent;text-align:left;padding:0 0 14px;cursor:pointer}
+.resume-download-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.resume-download-trigger .resume-chevron{transform:rotate(180deg)}
+.resume-download-panel{position:absolute;top:calc(100% + 14px);left:0;z-index:20;width:100%;max-height:min(420px,60dvh);overflow-y:auto;overscroll-behavior:contain;padding:20px;background:#111014;border:1px solid #d1c2ff4d;box-shadow:0 16px 48px #0006;text-align:left;scrollbar-width:thin;scrollbar-color:#8d82ab #111014}
+.resume-download-panel[hidden]{display:none}
+.resume-download-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;padding-bottom:16px;border-bottom:1px solid #d1c2ff24;color:#d7cfee;font-size:12px;line-height:1.6}
+.resume-download-heading>span:last-child{font-size:10px;color:#a49bad;white-space:nowrap}
+.resume-download-group{margin-top:18px}
+.resume-download-group h3{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;color:#efeaf9;font-size:14px;font-weight:500;line-height:1.5}
+.resume-download-group h3>span{font-size:10px;color:#9c90b5}
+.resume-download-group ul{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0;padding:0;list-style:none}
+.resume-download-group a{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 3px;border:1px solid #d1c2ff2b;background:#d1c2ff07;color:#cbc2de;font-size:11px;line-height:1.5;text-align:center;transition:background .18s,border-color .18s,color .18s}
+.resume-download-group a:hover,.resume-download-group a:focus-visible{background:#d1c2ff17;border-color:#d1c2ff8c;color:#f3eeff}
+.resume-download-group a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:360px){.resume-download-panel{padding:16px 12px}.resume-download-heading{gap:8px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.resume-download-group a{transition:none}}

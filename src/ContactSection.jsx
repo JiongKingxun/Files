@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, DownloadSimple, Copy, Check } from '@phosphor-icons/react';
+import { ArrowUpRight, Copy, Check } from '@phosphor-icons/react';
+import { ResumeDownloads } from './ResumeDownloads.jsx';
 
 const contacts = [
   { id:'email', label:'邮箱', en:'EMAIL', value:'Axuanxxx@foxmail.com', display:'Axuanxxx@foxmail.com' },
@@ -73,7 +74,7 @@ export function ContactSection({ onHome }) {
       <div className="contact-main reveal">
         <p className="eyebrow">THE NEXT IDEA STARTS WITH A CONVERSATION</p>
         <h2>下一个好作品，<br/><span className="dim">从一次对话开始</span></h2>
-        <a className="contact-cta" href="/downloads/zhong-qixuan-resume.pdf" download="钟启轩职业履历_领导查阅版_常规手机.pdf">点击下载个人简历 <DownloadSimple size={30}/></a>
+        <ResumeDownloads/>
       </div>
       <div className="contact-details">
         {contacts.map(contact => <button key={contact.id} type="button" className={copied === contact.id ? 'is-copied' : ''} onClick={() => copy(contact)} aria-label={`复制${contact.label}`}>
