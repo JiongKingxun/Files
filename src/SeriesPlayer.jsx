@@ -17,7 +17,7 @@ export function SeriesPlayer({ src, poster, label }) {
       import('hls.js').then(({ default: Hls }) => {
         if (disposed) return;
         if (!Hls.isSupported()) { setFailed(true); return; }
-        hls = new Hls({ maxBufferLength: 20, backBufferLength: 20, capLevelToPlayerSize: true });
+        hls = new Hls({ startLevel: 0, maxBufferLength: 20, backBufferLength: 20, capLevelToPlayerSize: true });
         hls.on(Hls.Events.ERROR, (_, data) => { if (data.fatal) setFailed(true); });
         hls.loadSource(src);
         hls.attachMedia(video);
