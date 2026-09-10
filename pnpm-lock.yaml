@@ -20,6 +20,9 @@ importers:
       gsap:
         specifier: ^3.13.0
         version: 3.15.0
+      hls.js:
+        specifier: ^1.7.2
+        version: 1.7.2
       react:
         specifier: ^19.1.1
         version: 19.2.8
@@ -533,6 +536,9 @@ packages:
 
   gsap@3.15.0:
     resolution: {integrity: sha512-dMW4CWBTUK1AEEDeZc1g4xpPGIrSf9fJF960qbTZmN/QwZIWY5wgliS6JWl9/25fpTGJrMRtSjGtOmPnfjZB+A==}
+
+  hls.js@1.7.2:
+    resolution: {integrity: sha512-CW/pPvSOFIRsosbwxrYaE9ERmpTo5fbTqL7wCvuCFlqW1Bmb1K5fXsY7yiH95rmlr4rVuA7UXHbM/cIXQ6AXwg==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -1054,6 +1060,8 @@ snapshots:
   gensync@1.0.0-beta.2: {}
 
   gsap@3.15.0: {}
+
+  hls.js@1.7.2: {}
 
   js-tokens@4.0.0: {}
 

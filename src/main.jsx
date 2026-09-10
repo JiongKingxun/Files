@@ -11,6 +11,9 @@ import { videoProjects } from './video-projects.js';
 import { modelResearchProject, ModelResearchDetail } from './ModelResearch.jsx';
 import { trainingExperienceProject, TrainingExperienceDetail } from './TrainingExperience.jsx';
 import { socialExperienceProject, SocialExperienceDetail } from './SocialExperience.jsx';
+import { developmentExperienceProject, DevelopmentExperienceDetail, DevelopmentCover } from './DevelopmentExperience.jsx';
+import { roughCutProject, RoughCutDetail } from './RoughCutDetail.jsx';
+import { SeriesPlayer } from './SeriesPlayer.jsx';
 import { LifeSection } from './LifeSection.jsx';
 import { projectCovers } from './project-covers.js';
 import { ContactSection } from './ContactSection.jsx';
@@ -52,9 +55,11 @@ const projects = [
     ],
   },
   ...videoProjects,
+  roughCutProject,
   modelResearchProject,
   trainingExperienceProject,
   socialExperienceProject,
+  developmentExperienceProject,
 ];
 
 const projectTotal = String(projects.length).padStart(2, '0');
@@ -64,8 +69,8 @@ const seriesEpisodes = projects.filter(project => project.series);
 const filmCollection = [
   ...projects.filter(project => project.video && !project.series),
   {
-    id:'05—07', name:'《高欢前传》连续影像', title:'高欢前传 · 连续三部曲',
-    category:'系列作品 / 06—08 连续篇章', summary:'六人结盟、权贵设局与南门冤案，按 06、07、08 的剧情顺序连续观看',
+    id:'05—07', name:'《高欢前传》连续影像', title:'高欢前传 · 连续影像与粗剪',
+    category:'系列作品 / 06—08 成片 + 第 10 集粗剪', summary:'从六人结盟到命运破局，观看 06、07、08 成片与第十集《红颜破局》粗剪，了解影像背后的导演与剪辑判断',
     episodes:seriesEpisodes,
   },
 ];
@@ -79,12 +84,12 @@ const skillCards = [
 
 function ProjectCard({ project:p, onSelect }) {
   const isCollection = Boolean(p.episodes);
-  return <button className={`project reveal ${p.featured ? 'project-featured' : ''} ${isCollection ? 'project-series-collection' : ''} ${p.kind === 'model-research' ? 'project-model-research' : ''} ${p.kind === 'training-experience' ? 'project-training-experience' : ''} ${p.kind === 'social-experience' ? 'project-social-experience' : ''}`} onClick={() => onSelect(p)} aria-label={isCollection ? '打开高欢前传连续影像 06 至 08' : `${p.video ? '播放' : '查看'}${p.name}`}>
+  return <button className={`project reveal ${p.featured ? 'project-featured' : ''} ${isCollection ? 'project-series-collection' : ''} ${p.kind === 'model-research' ? 'project-model-research' : ''} ${p.kind === 'training-experience' ? 'project-training-experience' : ''} ${p.kind === 'social-experience' ? 'project-social-experience' : ''} ${p.kind === 'development-experience' ? 'project-development-experience' : ''}`} onClick={() => onSelect(p)} aria-label={isCollection ? '打开高欢前传连续影像与第十集粗剪' : `${p.video ? '播放' : '查看'}${p.name}`}>
     <div className="project-image">
-      <img src={asset(projectCovers[p.id] || p.image)} alt={p.coverAlt || (p.kind === 'training-experience' ? '钟启轩驻校授课现场' : `${p.name} · 氛围封面`)} loading="lazy" decoding="async" width="1600" height="900"/>
+      {p.kind === 'development-experience' ? <DevelopmentCover/> : <img src={asset(projectCovers[p.id] || p.image)} alt={p.coverAlt || (p.kind === 'training-experience' ? '钟启轩驻校授课现场' : `${p.name} · 氛围封面`)} loading="lazy" decoding="async" width="1600" height="900"/>}
       <span className="project-number">{p.id} / {projectTotal}</span>
       <span className="project-open">{isCollection ? <FilmStrip size={29} weight="fill"/> : p.video ? <PlayCircle size={31} weight="fill"/> : <ArrowUpRight size={27}/>}</span>
-      {(p.video || isCollection) && <span className="video-duration">{isCollection ? '03 EPISODES' : p.duration}</span>}
+      {(p.video || isCollection) && <span className="video-duration">{isCollection ? `${String(p.episodes.length).padStart(2,'0')} EPISODES` : p.duration}</span>}
     </div>
     <div className="project-meta"><div><p>{p.category}</p><h3>{p.title}</h3></div><span>{isCollection ? '进入系列' : p.video ? '播放影片' : '查看案例'} <ArrowUpRight size={17}/></span></div>
     {p.summary && <p className="project-summary">{p.summary}</p>}
@@ -95,22 +100,23 @@ function SeriesDetail({ episodes, activeIndex, onChange }) {
   const current = episodes[activeIndex];
   return <>
     <div className="series-detail-head">
-      <p className="eyebrow">SERIES COLLECTION / 05—07</p>
-      <div><h2>《高欢前传》连续影像</h2><p>以小说《敕勒川悲歌》第一季修改版为剧本，三支影片沿 06、07、08 的剧情顺序连续展开，均由我制作</p></div>
+      <p className="eyebrow">SERIES COLLECTION / GAOHUAN</p>
+      <div><h2>《高欢前传》连续影像</h2><p>以《敕勒川悲歌》为剧本展开历史题材影像创作，这里收录我制作的 06—08 成片，以及用于展示导演与剪辑思路的第十集粗剪</p></div>
     </div>
     <div className="series-viewer-layout">
       <aside className="series-rail" aria-label="高欢前传剧集栏">
-        <div className="series-rail-header"><span>EPISODE LIST</span><strong>{String(activeIndex + 1).padStart(2,'0')} / 03</strong></div>
+        <div className="series-rail-header"><span>EPISODE LIST</span><strong>{String(activeIndex + 1).padStart(2,'0')} / {String(episodes.length).padStart(2,'0')}</strong></div>
         {episodes.map((episode,index) => <button className={index === activeIndex ? 'is-active' : ''} key={episode.id} onClick={() => onChange(index)} aria-current={index === activeIndex ? 'true' : undefined}>
           <span className="series-thumb"><img src={asset(episode.image)} alt=""/><i>{index + 1}</i></span>
           <span className="series-episode-copy"><small>{episode.episode}</small><strong>{episode.name.replace('《高欢前传》','')}</strong><em>{episode.duration}</em></span>
         </button>)}
-        <p className="series-rail-note">按编号连续观看<br/>点击剧集即可切换</p>
+        <p className="series-rail-note">06—08 成片 · 10 粗剪<br/>点击剧集即可切换</p>
       </aside>
       <div className="series-active" key={current.video}>
-        <figure className="video-figure"><video className="project-player" src={asset(current.video)} poster={asset(current.image)} controls playsInline preload="metadata"/><figcaption><span><PlayCircle size={18} weight="fill"/></span>{current.playbackCaption}</figcaption></figure>
-        <div className="series-active-copy"><div className="dialog-series"><span>{current.series}</span><strong>{current.seriesIndex} · {current.episode}</strong></div><h3>{current.name}</h3><p className="dialog-intro">{current.intro}</p><p className="dialog-scope">{current.scope}</p><p className="source-note">{current.note}</p></div>
+        <figure className="video-figure">{current.roughCut && <span className="roughcut-tag">ROUGH CUT / 粗剪版</span>}<SeriesPlayer src={asset(current.video)} poster={asset(current.image)} label={current.playbackCaption}/><figcaption><span><PlayCircle size={18} weight="fill"/></span>{current.playbackCaption}</figcaption></figure>
+        <div className="series-active-copy"><div className="dialog-series"><span>{current.series}</span><strong>{String(activeIndex + 1).padStart(2,'0')} / {String(episodes.length).padStart(2,'0')} · {current.episode}</strong></div><h3>{current.name}</h3><p className="dialog-intro">{current.intro}</p><p className="dialog-scope">{current.scope}</p><p className="source-note">{current.note}</p></div>
         <section className="project-research"><div className="research-heading"><Sparkle size={23}/><div><span>{current.researchLabel}</span><h3>{current.researchTitle}</h3></div></div><div className="fact-list">{current.facts.map(([label,text]) => <article key={label}><strong>{label}</strong><p>{text}</p></article>)}</div></section>
+        {current.roughCut && <RoughCutDetail/>}
       </div>
     </div>
   </>;
@@ -219,7 +225,7 @@ function App(){
 
       <section className="section creativity wrap" id="creativity" aria-labelledby="creativity-title">
         <div className="section-label reveal"><span>03 / IDEAS & EXPERIENCE</span><span>从实践中形成自己的方法</span></div>
-        <div className="section-heading reveal"><h2 id="creativity-title" aria-label="个人突出创意及经历">个人突出创意<br/><span className="dim">及经历</span></h2><p>建模考据、驻校培养、工程管理与长期公益<br/>记录创意、协作与责任的持续积累</p></div>
+        <div className="section-heading reveal"><h2 id="creativity-title" aria-label="个人突出创意及经历">个人突出创意<br/><span className="dim">及经历</span></h2><p>建模考据、驻校培养、工程公益与个人程序开发<br/>记录创意、协作与责任的持续积累</p></div>
         <div className="projects design-projects creativity-projects">{creativityProjects.map(project => <ProjectCard key={project.id} project={project} onSelect={openProject}/>)}</div>
       </section>
 
@@ -227,11 +233,11 @@ function App(){
       <ContactSection onHome={() => homeMotion.current?.restart()}/>
     </main>
 
-    <dialog ref={dialog} aria-label={selected?.name || '项目详情'} className={`project-dialog ${selected?.episodes ? 'series-dialog' : ''} ${selected?.kind === 'model-research' ? 'modeling-dialog' : ''} ${selected?.kind === 'training-experience' ? 'training-dialog' : ''} ${selected?.kind === 'social-experience' ? 'social-dialog' : ''}`} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }}>
+    <dialog ref={dialog} aria-label={selected?.name || '项目详情'} className={`project-dialog ${selected?.episodes ? 'series-dialog' : ''} ${selected?.kind === 'model-research' ? 'modeling-dialog' : ''} ${selected?.kind === 'training-experience' ? 'training-dialog' : ''} ${selected?.kind === 'social-experience' ? 'social-dialog' : ''} ${selected?.kind === 'development-experience' ? 'development-dialog' : ''}`} onCancel={event => { event.preventDefault(); close(); }} onClick={event => { if (event.target === event.currentTarget) close(); }}>
       {selected && <>
         <button className="dialog-close" onClick={close} aria-label="关闭项目详情" autoFocus><X size={24}/></button>
         <div className="dialog-content">
-          {selected.episodes ? <SeriesDetail episodes={selected.episodes} activeIndex={seriesEpisode} onChange={setSeriesEpisode}/> : selected.kind === 'model-research' ? <ModelResearchDetail/> : selected.kind === 'training-experience' ? <TrainingExperienceDetail/> : selected.kind === 'social-experience' ? <SocialExperienceDetail/> : <>
+          {selected.episodes ? <SeriesDetail episodes={selected.episodes} activeIndex={seriesEpisode} onChange={setSeriesEpisode}/> : selected.kind === 'model-research' ? <ModelResearchDetail/> : selected.kind === 'training-experience' ? <TrainingExperienceDetail/> : selected.kind === 'social-experience' ? <SocialExperienceDetail/> : selected.kind === 'development-experience' ? <DevelopmentExperienceDetail/> : <>
             <p className="eyebrow">SELECTED WORK / {selected.id}</p><h2>{selected.name}</h2><p className="dialog-intro">{selected.intro}</p><p className="dialog-scope">{selected.scope}</p><p className="source-note">{selected.note}</p>
             {selected.video && <figure className="video-figure"><video className="project-player" src={asset(selected.video)} poster={asset(selected.image)} controls playsInline preload="metadata"/><figcaption><span><PlayCircle size={18} weight="fill"/></span>{selected.playbackCaption || '完整成片 · 建议开启声音观看'}</figcaption></figure>}
             {selected.facts && <section className="project-research"><div className="research-heading"><Sparkle size={23}/><div><span>{selected.researchLabel || 'HISTORICAL CONTEXT'}</span><h3>{selected.researchTitle || '这段复原背后的历史'}</h3></div></div><div className="fact-list">{selected.facts.map(([year,text]) => <article key={year}><strong>{year}</strong><p>{text}</p></article>)}</div><div className="research-links">{selected.references?.length > 0 && <span>资料来源</span>}{selected.references?.map(([label,url]) => <a key={url} href={url} target="_blank" rel="noreferrer">{label}<ArrowUpRight size={14}/></a>)}</div></section>}
