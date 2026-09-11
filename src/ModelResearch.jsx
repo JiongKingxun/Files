@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, ArrowUpRight, MagnifyingGlassPlus, PlayCircle } from '@phosphor-icons/react';
+import { SeriesPlayer } from './SeriesPlayer.jsx';
 import './model-research.css';
 
 const media = file => `/media/shaocheng/${file}`;
@@ -72,7 +73,7 @@ export function ModelResearchDetail() {
         </>}
         {gallery === 3 && <>
           <figure className="video-figure case-demo">
-            <video className="project-player" src={media('opening-demo-v2.mp4')} poster={media('opening-demo.jpg')} controls playsInline preload="metadata"/>
+            <SeriesPlayer src={media('opening-demo-v2.mp4')} poster={media('opening-demo.jpg')} label="开场氛围分镜 Demo"/>
             <figcaption><PlayCircle size={18}/><span>开场氛围分镜 Demo · 01:53</span></figcaption>
           </figure>
           <p className="case-gallery-description">项目资料中的 P1-1-1 分镜演示，以雨夜街巷和屋瓦上的猫建立开场氛围，展示从静态视觉资产进入镜头测试的制作阶段</p>
