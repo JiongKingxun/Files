@@ -7,11 +7,13 @@ export function SeriesPlayer({ src, poster, label }) {
   const videoRef = useRef(null);
   const qualityRoot = useRef(null);
   const resumeState = useRef(null);
+  const controlsTimer = useRef(null);
   const menuId = useId();
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [quality, setQuality] = useState('original');
   const [qualityOpen, setQualityOpen] = useState(false);
+  const [controlsVisible, setControlsVisible] = useState(true);
   const qualities = getVideoQualities(src);
   const selectedQuality = qualities.find(option => option.id === quality) || qualities.at(-1);
   const playbackSrc = selectedQuality.src;
@@ -20,8 +22,17 @@ export function SeriesPlayer({ src, poster, label }) {
   useEffect(() => {
     setQuality('original');
     setQualityOpen(false);
+    setControlsVisible(true);
     resumeState.current = null;
   }, [src]);
+
+  useEffect(() => () => clearTimeout(controlsTimer.current), []);
+
+  useEffect(() => {
+    clearTimeout(controlsTimer.current);
+    if (qualityOpen) setControlsVisible(true);
+    else if (!videoRef.current?.paused) controlsTimer.current = setTimeout(() => setControlsVisible(false), 2200);
+  }, [qualityOpen]);
 
   useEffect(() => {
     if (!qualityOpen) return;
@@ -85,8 +96,24 @@ export function SeriesPlayer({ src, poster, label }) {
     setQualityOpen(false);
   };
 
-  return <div className="series-player-wrap">
-    <video ref={videoRef} className="project-player" poster={poster} aria-label={label} controls playsInline preload="metadata" onError={() => setFailed(true)}/>
+  const revealControls = () => {
+    clearTimeout(controlsTimer.current);
+    setControlsVisible(true);
+    if (!videoRef.current?.paused && !qualityOpen) controlsTimer.current = setTimeout(() => setControlsVisible(false), 2200);
+  };
+
+  const keepControls = () => {
+    clearTimeout(controlsTimer.current);
+    setControlsVisible(true);
+  };
+
+  const hideControlsLater = () => {
+    clearTimeout(controlsTimer.current);
+    if (!videoRef.current?.paused && !qualityOpen) controlsTimer.current = setTimeout(() => setControlsVisible(false), 500);
+  };
+
+  return <div className={`series-player-wrap ${controlsVisible || qualityOpen ? 'is-controls-visible' : ''}`} onPointerMove={revealControls} onPointerDown={revealControls} onMouseLeave={hideControlsLater} onFocusCapture={keepControls} onBlurCapture={hideControlsLater}>
+    <video ref={videoRef} className="project-player" poster={poster} aria-label={label} controls playsInline preload="metadata" onPlay={revealControls} onPause={keepControls} onEnded={keepControls} onError={() => setFailed(true)}/>
     <div className="video-quality" ref={qualityRoot}>
       <button type="button" className="video-quality-trigger" aria-expanded={qualityOpen} aria-controls={menuId} onClick={() => setQualityOpen(open => !open)}>画质 · {selectedQuality.label}<CaretDown size={13} aria-hidden="true"/></button>
       <ul className="video-quality-menu" id={menuId} role="radiogroup" aria-label="选择视频画质" hidden={!qualityOpen}>
